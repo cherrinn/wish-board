@@ -1,6 +1,8 @@
 "use client";
 
-import { SubmitEvent, useState } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
   Dialog,
@@ -13,7 +15,23 @@ import {
 import { Button } from "@/app/components/ui/button";
 import { Input } from "@/app/components/ui/input";
 import { Textarea } from "@/app/components/ui/textarea";
+
 import { Note } from "../types/Note";
+import { z } from "zod";
+
+const noteSchema = z.object({
+  name: z
+    .string()
+    .min(1, "กรุณาใส่ชื่อ")
+    .max(35, "ชื่อยาวเกินไป"),
+
+  message: z
+    .string()
+    .min(1, "กรุณาเขียนคำอวยพร")
+    .max(500, "ข้อความยาวเกินไป"),
+});
+
+type NoteFormData = z.infer<typeof noteSchema>;
 
 interface NoteFormProps {
   open: boolean;
@@ -26,25 +44,37 @@ export default function NoteForm({
   onOpenChange,
   onSubmit,
 }: NoteFormProps) {
-  const [name, setName] = useState("");
-  const [message, setMessage] = useState("");
   const [image, setImage] = useState<File | null>(null);
 
-  const handleSubmit = (e: SubmitEvent) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: {
+      errors,
+      isValid,
+    },
+  } = useForm<NoteFormData>({
+    resolver: zodResolver(noteSchema),
+    mode: "onChange",
+  });
 
+  const message = watch("message") ?? "";
+
+  const submitForm = (values: NoteFormData) => {
     const newNote = {
       id: Date.now(),
-      name,
+      name: values.name,
+      message: values.message,
       created_at: new Date().toISOString(),
-      message,
       image_url: "",
     };
 
     onSubmit(newNote, image);
 
-    setName("");
-    setMessage("");
+    reset();
+    setImage(null);
   };
 
   return (
@@ -67,7 +97,12 @@ export default function NoteForm({
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+
+        <form
+          onSubmit={handleSubmit(submitForm)}
+          className="mt-8 space-y-6"
+        >
+
           {/* Name */}
           <div>
             <label className="mb-2 block text-xl font-medium text-[#333333]">
@@ -75,51 +110,61 @@ export default function NoteForm({
             </label>
 
             <Input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              {...register("name")}
               placeholder="ชื่อของคุณ"
               maxLength={35}
               className="
-                min-w-0
                 h-16
                 rounded-xl
-                break-all
                 !text-xl
                 !leading-8
                 placeholder:text-xl
                 placeholder:text-neutral-400
               "
             />
+
+            {errors.name && (
+              <p className="mt-2 text-sm text-red-500">
+                {errors.name.message}
+              </p>
+            )}
           </div>
+
 
           {/* Message */}
           <div>
             <label className="mb-2 block text-xl font-medium text-[#333333]">
               ข้อความ
             </label>
+
             <Textarea
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              {...register("message")}
               maxLength={500}
               placeholder="เขียนคำอวยพร..."
               className="
-                min-w-0
                 min-h-48
                 rounded-xl
                 p-5
-                break-all
-                whitespace-pre-wrap
                 resize-none
+                whitespace-pre-wrap
                 !text-xl
                 !leading-9
                 placeholder:text-xl
                 placeholder:text-neutral-400
               "
             />
-            <p className="mt-2 text-right text-smtext-neutral-400">
-              {message.length}/{500}
+
+            {errors.message && (
+              <p className="mt-2 text-sm text-red-500">
+                {errors.message.message}
+              </p>
+            )}
+
+            <p className="mt-2 text-right text-sm text-neutral-400">
+              {message.length}/500
             </p>
           </div>
+
 
           {/* Image */}
           <div>
@@ -141,13 +186,28 @@ export default function NoteForm({
             />
           </div>
 
+
           {/* Submit */}
           <Button
             type="submit"
-            className="mt-3 h-14 w-full rounded-full bg-[#1C1C1C] text-lg font-medium text-white hover:bg-[#333333]"
+            disabled={!isValid}
+            className="
+              mt-3
+              h-14
+              w-full
+              rounded-full
+              bg-[#1C1C1C]
+              text-lg
+              font-medium
+              text-white
+              hover:bg-[#333333]
+              disabled:cursor-not-allowed
+              disabled:opacity-40
+            "
           >
             ✨ ส่งคำอวยพร
           </Button>
+
         </form>
       </DialogContent>
     </Dialog>
