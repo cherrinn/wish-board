@@ -61,8 +61,9 @@ export default function NoteCard({
 
       <div className="my-4 h-px bg-[#E8E1D5]" />
 
-      <p className="whitespace-pre-wrap text-base leading-9 text-[#333333]">
-        {message}
+      <p className="whitespace-pre-wrap text-base leading-9 text-[#333333] flex flex-col">
+        <span className="text-neutral-500 text-sm">💌 ข้อความจากใจ...</span>
+        <span className="pl-4">{message}</span>
       </p>
     </article>
   );
