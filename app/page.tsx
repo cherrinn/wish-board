@@ -138,7 +138,7 @@ export default function Home() {
         <h1
           className="
             font-serif
-            text-4xl
+            text-2xl
             font-medium
             tracking-tight
             text-[#1C1C1C]
@@ -192,11 +192,11 @@ export default function Home() {
             <h2
               className="
                 font-serif
-                text-4xl
+                text-2xl
                 font-medium
                 leading-tight
                 text-[#1C1C1C]
-                md:text-5xl
+                md:text-2xl
               "
             >
               เรื่องราวดี ๆ
@@ -207,7 +207,7 @@ export default function Home() {
             <p
               className="
               mt-6
-              text-xl
+              text-lg
               leading-9
               text-neutral-500
             "
@@ -219,8 +219,8 @@ export default function Home() {
 
             <Button
               className="
-                mt-10
-                h-14
+                mt-8
+                h-12
                 rounded-full
                 bg-[#1C1C1C]
                 px-10

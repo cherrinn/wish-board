@@ -90,7 +90,7 @@ export default function NoteForm({
         "
       >
         <DialogHeader>
-          <DialogTitle className="font-serif text-2xl font-medium text-[#1C1C1C]">
+          <DialogTitle className="font-serif text-xl font-medium text-[#1C1C1C]">
             ✨ ฝากข้อความจากใจ ✨
           </DialogTitle>
 
@@ -107,7 +107,7 @@ export default function NoteForm({
 
           {/* Name */}
           <div>
-            <label className="mb-2 block text-xl font-medium text-[#333333]">
+            <label className="mb-2 block text-lg font-medium text-[#333333]">
               ชื่อ
             </label>
 
@@ -118,7 +118,7 @@ export default function NoteForm({
               className="
                 h-16
                 rounded-xl
-                !text-xl
+                !text-lg
                 !leading-8
                 placeholder:text-xl
                 placeholder:text-neutral-400
@@ -135,7 +135,7 @@ export default function NoteForm({
 
           {/* Message */}
           <div>
-            <label className="mb-2 block text-xl font-medium text-[#333333]">
+            <label className="mb-2 block text-lg font-medium text-[#333333]">
               ข้อความ
             </label>
 
@@ -149,7 +149,7 @@ export default function NoteForm({
                 p-5
                 resize-none
                 whitespace-pre-wrap
-                !text-xl
+                !text-lg
                 !leading-9
                 placeholder:text-xl
                 placeholder:text-neutral-400
@@ -170,7 +170,7 @@ export default function NoteForm({
 
           {/* Image */}
           <div>
-            <label className="mb-2 block text-xl font-medium text-[#333333]">
+            <label className="mb-2 block text-lg font-medium text-[#333333]">
               รูปภาพ (ถ้ามี)
             </label>
 

@@ -37,7 +37,7 @@ export default function NoteCard({
       <h2
         className="
           font-serif
-          text-2xl
+          text-lg
           font-medium
           text-[#1C1C1C]
         "
