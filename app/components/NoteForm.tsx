@@ -83,16 +83,18 @@ export default function NoteForm({
         className="
           overflow-hidden
           rounded-3xl
+          bg-white
           p-8
+          shadow-2xl
           sm:max-w-lg
         "
       >
         <DialogHeader>
           <DialogTitle className="font-serif text-2xl font-medium text-[#1C1C1C]">
-            ฝากข้อความจากใจ
+            ✨ ฝากข้อความจากใจ ✨
           </DialogTitle>
 
-          <DialogDescription className="mt-3 !text-lg !leading-8 !text-[#6B645B]">
+          <DialogDescription className="mt-3 !text-base !leading-8 !text-[#6B645B]">
             เขียนคำอวยพรดี ๆ เพื่อเก็บไว้เป็นความทรงจำ
           </DialogDescription>
         </DialogHeader>
@@ -197,7 +199,7 @@ export default function NoteForm({
               w-full
               rounded-full
               bg-[#1C1C1C]
-              text-lg
+              text-base
               font-medium
               text-white
               hover:bg-[#333333]

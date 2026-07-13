@@ -138,17 +138,17 @@ export default function Home() {
         <h1
           className="
             font-serif
-            text-5xl
+            text-4xl
             font-medium
             tracking-tight
             text-[#1C1C1C]
-            md:text-6xl
+            md:text-5xl
           "
         >
           บันทึกความรู้สึกดี ๆ
         </h1>
 
-        <p className="mt-6 text-lg text-neutral-500">
+        <p className="mt-6 text-base text-neutral-500">
           ทุกข้อความจะถูกเก็บไว้เป็นความทรงจำที่สวยงาม
         </p>
       </section>
@@ -224,7 +224,7 @@ export default function Home() {
                 rounded-full
                 bg-[#1C1C1C]
                 px-10
-                text-lg
+                text-base
                 text-white
                 shadow-lg
                 transition
@@ -274,7 +274,7 @@ export default function Home() {
             rounded-full
             bg-[#1C1C1C]
             px-12
-            text-lg
+            text-base
             text-white
             shadow-xl
             transition

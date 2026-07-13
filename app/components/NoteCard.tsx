@@ -61,7 +61,7 @@ export default function NoteCard({
 
       <div className="my-6 h-px bg-[#E8E1D5]" />
 
-      <p className="whitespace-pre-wrap text-xl leading-9 text-[#333333]">
+      <p className="whitespace-pre-wrap text-base leading-9 text-[#333333]">
         {message}
       </p>
     </article>
