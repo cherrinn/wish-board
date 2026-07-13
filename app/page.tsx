@@ -187,7 +187,6 @@ export default function Home() {
               backdrop-blur-2xl
             "
           >
-        
             <h2
               className="
                 font-serif
@@ -234,18 +233,23 @@ export default function Home() {
       ) : (
         <section
           className="
-            mx-auto
-            grid
-            w-full
-            max-w-[1200px]
-            grid-cols-1
-            gap-8
-            sm:grid-cols-2
-            lg:grid-cols-4
-          "
+    mx-auto
+    w-full
+    max-w-[1200px]
+    columns-1
+    sm:columns-2
+    lg:columns-4
+    gap-8
+  "
         >
           {notes.map((note) => (
-            <div key={note.id}>
+            <div
+              key={note.id}
+              className="
+        mb-8
+        break-inside-avoid
+      "
+            >
               <NoteCard
                 name={note.name}
                 message={note.message}
