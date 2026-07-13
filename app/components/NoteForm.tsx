@@ -42,7 +42,6 @@ export default function NoteForm({
 
     onSubmit(newNote);
 
-    console.log('newNote', newNote)
     setName("");
     setMessage("");
   };
@@ -68,8 +67,17 @@ export default function NoteForm({
             </label>
 
             <Input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               placeholder="ชื่อของคุณ"
-              className="h-16 rounded-xl !text-xl !leading-8 placeholder:text-xl placeholder:text-neutral-400"
+              className="
+                h-16
+                rounded-xl
+                !text-xl
+                !leading-8
+                placeholder:text-xl
+                placeholder:text-neutral-400
+              "
             />
           </div>
 
