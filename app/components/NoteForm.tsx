@@ -48,7 +48,14 @@ export default function NoteForm({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className=" rounded-3xl p-8 sm:max-w-lg  ">
+      <DialogContent
+        className="
+          overflow-hidden
+          rounded-3xl
+          p-8
+          sm:max-w-lg
+        "
+      >
         <DialogHeader>
           <DialogTitle className="font-serif text-2xl font-medium text-[#1C1C1C]">
             ฝากข้อความจากใจ
@@ -70,9 +77,12 @@ export default function NoteForm({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="ชื่อของคุณ"
+              maxLength={35}
               className="
+                min-w-0
                 h-16
                 rounded-xl
+                break-all
                 !text-xl
                 !leading-8
                 placeholder:text-xl
@@ -91,7 +101,19 @@ export default function NoteForm({
               onChange={(e) => setMessage(e.target.value)}
               maxLength={500}
               placeholder="เขียนคำอวยพร..."
-              className="min-h-48 rounded-xl p-5 !text-xl !leading-9 placeholder:text-xl placeholder:text-neutral-400"
+              className="
+                min-w-0
+                min-h-48
+                rounded-xl
+                p-5
+                break-all
+                whitespace-pre-wrap
+                resize-none
+                !text-xl
+                !leading-9
+                placeholder:text-xl
+                placeholder:text-neutral-400
+              "
             />
             <p className="mt-2 text-right text-smtext-neutral-400">
               {message.length}/{500}
