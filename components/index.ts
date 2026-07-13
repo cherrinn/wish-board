@@ -1,0 +1,1 @@
+// export default NoteCard from './NoteCard'
