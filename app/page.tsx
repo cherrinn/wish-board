@@ -251,6 +251,7 @@ export default function Home() {
                 message={note.message}
                 imageUrl={note.image_url}
                 createdAt={note.created_at}
+                cardNo={note.card_number}
               />
             </div>
           ))}

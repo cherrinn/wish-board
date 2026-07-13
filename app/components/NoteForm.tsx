@@ -60,6 +60,7 @@ export default function NoteForm({
       message: values.message,
       created_at: new Date().toISOString(),
       image_url: "",
+      card_number: 0,
     };
 
     onSubmit(newNote, image);

@@ -1,10 +1,12 @@
 import Image from "next/image";
+import { Badge } from "./ui/badge";
 
 interface NoteCardProps {
   name: string;
   createdAt: string;
   imageUrl?: string;
   message: string;
+  cardNo: number
 }
 
 export default function NoteCard({
@@ -12,6 +14,7 @@ export default function NoteCard({
   createdAt,
   imageUrl,
   message,
+  cardNo,
 }: NoteCardProps) {
   const date = new Date(createdAt).toLocaleDateString("en-US", {
     day: "numeric",
@@ -45,7 +48,10 @@ export default function NoteCard({
         {name}
       </h2>
 
-      <p className="text-sm text-neutral-500">{date}</p>
+      <div className="flex justify-between">
+        <p className="text-sm text-neutral-500">{date}</p>
+        <Badge variant="secondary">💌 #{cardNo}</Badge>
+      </div>
 
       {imageUrl && (
         <div className="my-4 overflow-hidden rounded-xl">

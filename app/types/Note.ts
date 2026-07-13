@@ -4,4 +4,5 @@ export interface Note {
   created_at: string;
   image_url?: string;
   message: string;
+  card_number: number;
 }
