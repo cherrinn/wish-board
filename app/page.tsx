@@ -11,6 +11,7 @@ import { supabase } from "./lib/supabase";
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [notes, setNotes] = useState<Note[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleAddNote = async (newNote: Note, image: File | null) => {
     let imageUrl = "";
@@ -55,6 +56,8 @@ export default function Home() {
 
   useEffect(() => {
     const loadNotes = async () => {
+      setIsLoading(true);
+
       const { data, error } = await supabase
         .from("notes")
         .select("*")
@@ -64,10 +67,12 @@ export default function Home() {
 
       if (error) {
         console.error(error);
+        setIsLoading(false);
         return;
       }
 
-      setNotes(data);
+      setNotes(data ?? []);
+      setIsLoading(false);
     };
 
     loadNotes();
@@ -140,7 +145,19 @@ export default function Home() {
       </section>
 
       {/* Notes */}
-      {notes.length === 0 ? (
+      {isLoading ? (
+        <section
+          className="
+      flex
+      min-h-[45vh]
+      items-center
+      justify-center
+      text-center
+    "
+        >
+          <p className="text-xl text-neutral-400">กำลังโหลดข้อความอวยพร...</p>
+        </section>
+      ) : notes.length === 0 ? (
         <section
           className="
             flex
