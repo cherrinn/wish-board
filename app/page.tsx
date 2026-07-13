@@ -26,7 +26,12 @@ const mockNotes = [
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
-  const [notes] = useState<Note[]>([]); // TODO: เปลี่ยนเป็น fetch จาก Supabase
+  const [notes, setNotes] = useState<Note[]>([]); // TODO: เปลี่ยนเป็น fetch จาก Supabase
+
+  const handleAddNote = (newNote: Note) => {
+    setNotes((prev) => [...prev, newNote]);
+    setIsOpen(false);
+  };
 
   return (
     <main
@@ -118,9 +123,7 @@ export default function Home() {
               backdrop-blur-2xl
             "
           >
-            <div className="mb-8 text-3xl text-[#B08D57]">
-              ✦
-            </div>
+            <div className="mb-8 text-3xl text-[#B08D57]">✦</div>
 
             <h2
               className="
@@ -228,7 +231,11 @@ export default function Home() {
         </Button>
       )}
 
-      <NoteForm open={isOpen} onOpenChange={setIsOpen} />
+      <NoteForm
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        onSubmit={handleAddNote}
+      />
     </main>
   );
 }

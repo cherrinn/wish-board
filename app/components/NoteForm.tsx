@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { SubmitEvent, useState } from "react";
 
 import {
   Dialog,
@@ -13,47 +13,54 @@ import {
 import { Button } from "@/app/components/ui/button";
 import { Input } from "@/app/components/ui/input";
 import { Textarea } from "@/app/components/ui/textarea";
+import { Note } from "../types/Note";
 
 interface NoteFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onSubmit: (note: Note) => void;
 }
 
-export default function NoteForm({ open, onOpenChange }: NoteFormProps) {
+export default function NoteForm({
+  open,
+  onOpenChange,
+  onSubmit,
+}: NoteFormProps) {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
 
-    console.log({
+    const newNote = {
+      id: Date.now(),
       name,
+      createdAt: new Date().toISOString(),
       message,
-    });
+      imageUrl: "",
+    };
 
-    onOpenChange(false);
+    onSubmit(newNote);
+
+    console.log('newNote', newNote)
+    setName("");
+    setMessage("");
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className=" rounded-3xl p-8 sm:max-w-lg  ">
         <DialogHeader>
-          <DialogTitle
-            className="font-serif text-2xl font-medium text-[#1C1C1C]">
+          <DialogTitle className="font-serif text-2xl font-medium text-[#1C1C1C]">
             ฝากข้อความจากใจ
           </DialogTitle>
 
-          <DialogDescription
-            className="mt-3 !text-lg !leading-8 !text-[#6B645B]"
-          >
+          <DialogDescription className="mt-3 !text-lg !leading-8 !text-[#6B645B]">
             เขียนคำอวยพรดี ๆ เพื่อเก็บไว้เป็นความทรงจำ
           </DialogDescription>
         </DialogHeader>
 
-        <form
-          onSubmit={handleSubmit}
-          className="mt-8 space-y-6"
-        >
+        <form onSubmit={handleSubmit} className="mt-8 space-y-6">
           {/* Name */}
           <div>
             <label className="mb-2 block text-xl font-medium text-[#333333]">
@@ -68,8 +75,7 @@ export default function NoteForm({ open, onOpenChange }: NoteFormProps) {
 
           {/* Message */}
           <div>
-            <label
-              className="mb-2 block text-xl font-medium text-[#333333]">
+            <label className="mb-2 block text-xl font-medium text-[#333333]">
               ข้อความ
             </label>
             <Textarea
@@ -79,16 +85,14 @@ export default function NoteForm({ open, onOpenChange }: NoteFormProps) {
               placeholder="เขียนคำอวยพร..."
               className="min-h-48 rounded-xl p-5 !text-xl !leading-9 placeholder:text-xl placeholder:text-neutral-400"
             />
-            <p
-              className="mt-2 text-right text-smtext-neutral-400"
-            >
+            <p className="mt-2 text-right text-smtext-neutral-400">
               {message.length}/{500}
             </p>
           </div>
 
           {/* Image */}
           <div>
-            <label className="mb-2 block text-xl font-medium text-[#333333]" >
+            <label className="mb-2 block text-xl font-medium text-[#333333]">
               รูปภาพ (ถ้ามี)
             </label>
 
