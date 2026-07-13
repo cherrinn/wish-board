@@ -55,7 +55,6 @@ export default function Home() {
     }
 
     setNotes((prev) => [data, ...prev]);
-
     setIsOpen(false);
   };
 
@@ -91,6 +90,8 @@ export default function Home() {
         overflow-hidden
         bg-[#FAF7F2]
         px-6
+        md:px-12
+        lg:px-24
         py-16
       "
     >
@@ -101,8 +102,8 @@ export default function Home() {
           absolute
           -left-32
           -top-32
-          h-125
-          w-125
+          h-[500px]
+          w-[500px]
           rounded-full
           bg-[#F3D7A3]/40
           blur-3xl
@@ -112,25 +113,24 @@ export default function Home() {
       <div
         className="
           absolute
-          right-37.5
+          right-[150px]
           top-1/3
-          h-112.5
-          w-113.5
+          h-[450px]
+          w-[450px]
           rounded-full
           bg-[#E8C7D1]/30
           blur-3xl
         "
       />
 
-      {/* Hero */}
       <section
         className="
+          relative
+          z-10
           mx-auto
           mb-16
           max-w-3xl
           text-center
-          relative
-          z-10
         "
       >
         <div className="mb-6 text-xl text-[#B08D57]">✦</div>
@@ -153,32 +153,30 @@ export default function Home() {
         </p>
       </section>
 
-      {/* Notes */}
       {isLoading ? (
         <section
           className="
-      flex
-      min-h-[45vh]
-      items-center
-      justify-center
-      text-center
-    "
+          flex
+          min-h-[45vh]
+          items-center
+          justify-center
+        "
         >
           <p className="text-xl text-neutral-400">กำลังโหลดข้อความอวยพร...</p>
         </section>
       ) : notes.length === 0 ? (
         <section
           className="
-            flex
-            min-h-[45vh]
-            items-center
-            justify-center
-            text-center
-          "
+          flex
+          min-h-[45vh]
+          items-center
+          justify-center
+          text-center
+        "
         >
           <Card
             className="
-             w-full
+              w-full
               max-w-xl
               rounded-[36px]
               border
@@ -208,11 +206,11 @@ export default function Home() {
 
             <p
               className="
-                mt-6
-                text-xl
-                leading-9
-                text-neutral-500
-              "
+              mt-6
+              text-xl
+              leading-9
+              text-neutral-500
+            "
             >
               ฝากคำอวยพรแรกของคุณ
               <br />
@@ -227,7 +225,6 @@ export default function Home() {
                 bg-[#1C1C1C]
                 px-10
                 text-lg
-                font-medium
                 text-white
                 shadow-lg
                 transition
@@ -244,24 +241,18 @@ export default function Home() {
         <section
           className="
             mx-auto
+            grid
             w-full
-            max-w-[1600px]
-            columns-1
+            max-w-[1200px]
+            grid-cols-1
             gap-8
-            sm:columns-2
-            lg:columns-4
+            sm:grid-cols-2
+            lg:grid-cols-4
           "
         >
           {notes.map((note) => (
-            <div
-              key={note.id}
-              className="
-                mb-8
-                break-inside-avoid
-              "
-            >
+            <div key={note.id}>
               <NoteCard
-                key={note.id}
                 name={note.name}
                 message={note.message}
                 imageUrl={note.image_url}
@@ -272,26 +263,24 @@ export default function Home() {
         </section>
       )}
 
-      {/* Floating action */}
       {notes.length > 0 && (
         <Button
           className="
-          fixed
-          bottom-8
-          left-1/2
-          -translate-x-1/2
-          h-16
-          rounded-full
-          px-12
-          text-lg
-          font-medium
-          bg-[#1C1C1C]
-          text-white
-          shadow-xl
-          transition
-          hover:scale-105
-          hover:bg-[#333333]
-        "
+            fixed
+            bottom-8
+            left-1/2
+            h-16
+            -translate-x-1/2
+            rounded-full
+            bg-[#1C1C1C]
+            px-12
+            text-lg
+            text-white
+            shadow-xl
+            transition
+            hover:scale-105
+            hover:bg-[#333333]
+          "
           onClick={() => setIsOpen(true)}
         >
           ✨ ฝากคำอวยพร
