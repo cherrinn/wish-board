@@ -187,12 +187,11 @@ export default function Home() {
               backdrop-blur-2xl
             "
           >
-            <div className="mb-8 text-3xl text-[#B08D57]">✦</div>
-
+        
             <h2
               className="
                 font-serif
-                text-xl
+                text-2xl
                 font-medium
                 leading-tight
                 text-[#1C1C1C]
@@ -205,20 +204,16 @@ export default function Home() {
 
             <p
               className="
-              mt-6
-              text-lg
+              text-sm
               leading-9
               text-neutral-500
             "
             >
-              ฝากคำอวยพรแรกของคุณ
-              <br />
-              เพื่อร่วมสร้างความทรงจำดี ๆ ไว้ที่นี่
+              ฝากคำอวยพรแรกของคุณ เพื่อร่วมสร้างความทรงจำดี ๆ ไว้ที่นี่
             </p>
 
             <Button
               className="
-                mt-8
                 h-12
                 rounded-full
                 bg-[#1C1C1C]
