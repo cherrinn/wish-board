@@ -7,6 +7,11 @@ import { useEffect, useState } from "react";
 import NoteForm from "@/app/components/NoteForm";
 import { Note } from "./types/Note";
 import { supabase } from "./lib/supabase";
+import dynamic from "next/dynamic";
+
+const Sparkles = dynamic(() => import("@/app/components/Sparkles"), {
+  ssr: false,
+});
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
@@ -89,6 +94,8 @@ export default function Home() {
         py-16
       "
     >
+      <Sparkles />
+
       <div
         className="
           absolute
@@ -122,6 +129,8 @@ export default function Home() {
           mb-16
           max-w-3xl
           text-center
+          relative
+          z-10
         "
       >
         <div className="mb-6 text-xl text-[#B08D57]">✦</div>
