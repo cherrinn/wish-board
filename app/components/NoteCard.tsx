@@ -26,7 +26,7 @@ export default function NoteCard({
         border
         border-[#E8E1D5]
         bg-white
-        p-10
+        p-6
         shadow-sm
         transition
         duration-300
