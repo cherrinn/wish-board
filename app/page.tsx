@@ -138,7 +138,7 @@ export default function Home() {
         <h1
           className="
             font-serif
-            text-2xl
+             text-xl
             font-medium
             tracking-tight
             text-[#1C1C1C]
@@ -177,12 +177,12 @@ export default function Home() {
           <Card
             className="
               w-full
-              max-w-xl
+              max-w-lg
               rounded-[36px]
               border
               border-white/60
               bg-white/30
-              p-12
+              p-8
               shadow-xl
               backdrop-blur-2xl
             "
@@ -192,11 +192,10 @@ export default function Home() {
             <h2
               className="
                 font-serif
-                text-2xl
+                text-xl
                 font-medium
                 leading-tight
                 text-[#1C1C1C]
-                md:text-2xl
               "
             >
               เรื่องราวดี ๆ

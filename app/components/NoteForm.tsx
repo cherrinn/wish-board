@@ -120,7 +120,7 @@ export default function NoteForm({
                 rounded-xl
                 !text-lg
                 !leading-8
-                placeholder:text-xl
+                placeholder:text-lg
                 placeholder:text-neutral-400
               "
             />
@@ -151,7 +151,7 @@ export default function NoteForm({
                 whitespace-pre-wrap
                 !text-lg
                 !leading-9
-                placeholder:text-xl
+                placeholder:text-lg
                 placeholder:text-neutral-400
               "
             />
