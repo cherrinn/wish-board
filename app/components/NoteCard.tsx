@@ -13,26 +13,26 @@ export default function NoteCard({
   imageUrl,
   message,
 }: NoteCardProps) {
-  // const date = new Date(createdAt).toLocaleDateString("en-US", {
-  //   day: "numeric",
-  //   month: "long",
-  //   year: "numeric",
-  // });
+  const date = new Date(createdAt).toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 
   return (
     <article
       className="
-    rounded-2xl
-    border
-    border-[#E8E1D5]
-    bg-white
-    p-8
-    shadow-sm
-    transition
-    duration-300
-    hover:-translate-y-1
-    hover:shadow-lg
-  "
+        rounded-2xl
+        border
+        border-[#E8E1D5]
+        bg-white
+        p-8
+        shadow-sm
+        transition
+        duration-300
+        hover:-translate-y-1
+        hover:shadow-lg
+      "
     >
       <h2
         className="
@@ -46,7 +46,7 @@ export default function NoteCard({
       </h2>
 
       <p className="mt-2 text-base text-neutral-500" >
-        {createdAt}
+        {date}
       </p>
 
 
