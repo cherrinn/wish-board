@@ -195,6 +195,7 @@ export default function Home() {
               "
             >
               <NoteCard
+                key={note.id}
                 name={note.name}
                 message={note.message}
                 imageUrl={note.imageUrl ?? undefined}
