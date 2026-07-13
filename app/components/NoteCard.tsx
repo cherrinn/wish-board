@@ -36,19 +36,16 @@ export default function NoteCard({
     >
       <h2
         className="
-      font-serif
-      text-2xl
-      font-medium
-      text-[#1C1C1C]
-    "
+          font-serif
+          text-2xl
+          font-medium
+          text-[#1C1C1C]
+        "
       >
         {name}
       </h2>
 
-      <p className="mt-2 text-base text-neutral-500" >
-        {date}
-      </p>
-
+      <p className="mt-2 text-base text-neutral-500">{date}</p>
 
       {imageUrl && (
         <div className="my-4 overflow-hidden rounded-xl">
@@ -61,7 +58,6 @@ export default function NoteCard({
           />
         </div>
       )}
-
 
       <div className="my-6 h-px bg-[#E8E1D5]" />
 

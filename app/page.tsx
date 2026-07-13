@@ -3,35 +3,75 @@
 import { Button } from "@/app/components/ui/button";
 import { Card } from "@/app/components/ui/card";
 import NoteCard from "@/app/components/NoteCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NoteForm from "@/app/components/NoteForm";
 import { Note } from "./types/Note";
-
-const mockNotes = [
-  {
-    id: 1,
-    name: "Alice",
-    createdAt: "2026-07-13",
-    message: "ขอให้ทุกวันเต็มไปด้วยความสุข และมีแต่เรื่องดี ๆ เข้ามาในชีวิต ✨",
-    imageUrl: "/images/Alice.jpg",
-  },
-  {
-    id: 2,
-    name: "Benjamin",
-    createdAt: "2026-07-12",
-    message:
-      "Thank you for all the wonderful memories. Wishing you endless happiness.",
-  },
-];
+import { supabase } from "./lib/supabase";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
-  const [notes, setNotes] = useState<Note[]>([]); // TODO: เปลี่ยนเป็น fetch จาก Supabase
+  const [notes, setNotes] = useState<Note[]>([]);
 
-  const handleAddNote = (newNote: Note) => {
-    setNotes((prev) => [...prev, newNote]);
+  const handleAddNote = async (newNote: Note, image: File | null) => {
+    let imageUrl = "";
+
+    if (image) {
+      const fileName = `${Date.now()}-${image.name}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("images")
+        .upload(fileName, image);
+
+      if (uploadError) {
+        console.error(uploadError);
+        return;
+      }
+
+      const { data } = supabase.storage.from("images").getPublicUrl(fileName);
+
+      imageUrl = data.publicUrl;
+    }
+
+    const { data, error } = await supabase
+      .from("notes")
+      .insert({
+        name: newNote.name,
+        message: newNote.message,
+        image_url: imageUrl,
+        created_at: new Date().toISOString(),
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    setNotes((prev) => [data, ...prev]);
+
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    const loadNotes = async () => {
+      const { data, error } = await supabase
+        .from("notes")
+        .select("*")
+        .order("created_at", {
+          ascending: false,
+        });
+
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      setNotes(data);
+    };
+
+    loadNotes();
+  }, []);
 
   return (
     <main
@@ -198,8 +238,8 @@ export default function Home() {
                 key={note.id}
                 name={note.name}
                 message={note.message}
-                imageUrl={note.imageUrl ?? undefined}
-                createdAt={note.createdAt}
+                imageUrl={note.image_url}
+                createdAt={note.created_at}
               />
             </div>
           ))}

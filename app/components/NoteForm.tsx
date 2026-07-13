@@ -18,7 +18,7 @@ import { Note } from "../types/Note";
 interface NoteFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (note: Note) => void;
+  onSubmit: (note: Note, image: File | null) => void;
 }
 
 export default function NoteForm({
@@ -28,6 +28,7 @@ export default function NoteForm({
 }: NoteFormProps) {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
+  const [image, setImage] = useState<File | null>(null);
 
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
@@ -35,12 +36,12 @@ export default function NoteForm({
     const newNote = {
       id: Date.now(),
       name,
-      createdAt: new Date().toISOString(),
+      created_at: new Date().toISOString(),
       message,
-      imageUrl: "",
+      image_url: "",
     };
 
-    onSubmit(newNote);
+    onSubmit(newNote, image);
 
     setName("");
     setMessage("");
@@ -129,6 +130,13 @@ export default function NoteForm({
             <Input
               type="file"
               accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+
+                if (file) {
+                  setImage(file);
+                }
+              }}
               className="h-14 rounded-xl text-xl"
             />
           </div>
