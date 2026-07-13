@@ -1,9 +1,11 @@
 "use client";
 
 import { Button } from "@/app/components/ui/button";
+import { Card } from "@/app/components/ui/card";
 import NoteCard from "@/app/components/NoteCard";
 import { useState } from "react";
 import NoteForm from "@/app/components/NoteForm";
+import { Note } from "./types/Note";
 
 const mockNotes = [
   {
@@ -24,6 +26,7 @@ const mockNotes = [
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
+  const [notes] = useState<Note[]>([]); // TODO: เปลี่ยนเป็น fetch จาก Supabase
 
   return (
     <main
@@ -71,9 +74,7 @@ export default function Home() {
           text-center
         "
       >
-        <div className="mb-6 text-xl text-[#B08D57]">
-          ✦
-        </div>
+        <div className="mb-6 text-xl text-[#B08D57]">✦</div>
 
         <h1
           className="
@@ -94,30 +95,117 @@ export default function Home() {
       </section>
 
       {/* Notes */}
-      <section
-        className="
-          mx-auto
-          w-full
-          max-w-[1600px]
-          columns-1
-          gap-8
-          sm:columns-2
-          lg:columns-4
-        "
-      >
-        {mockNotes.map((note) => (
-          <div
-            key={note.id}
-            className="mb-8 break-inside-avoid"
+      {notes.length === 0 ? (
+        <section
+          className="
+            flex
+            min-h-[45vh]
+            items-center
+            justify-center
+            text-center
+          "
+        >
+          <Card
+            className="
+             w-full
+              max-w-xl
+              rounded-[36px]
+              border
+              border-white/60
+              bg-white/30
+              p-12
+              shadow-xl
+              backdrop-blur-2xl
+            "
           >
-            <NoteCard {...note} />
-          </div>
-        ))}
-      </section>
+            <div className="mb-8 text-3xl text-[#B08D57]">
+              ✦
+            </div>
+
+            <h2
+              className="
+                font-serif
+                text-4xl
+                font-medium
+                leading-tight
+                text-[#1C1C1C]
+                md:text-5xl
+              "
+            >
+              เรื่องราวดี ๆ
+              <br />
+              กำลังจะเริ่มต้น
+            </h2>
+
+            <p
+              className="
+                mt-6
+                text-xl
+                leading-9
+                text-neutral-500
+              "
+            >
+              ฝากคำอวยพรแรกของคุณ
+              <br />
+              เพื่อร่วมสร้างความทรงจำดี ๆ ไว้ที่นี่
+            </p>
+
+            <Button
+              className="
+                mt-10
+                h-14
+                rounded-full
+                bg-[#1C1C1C]
+                px-10
+                text-lg
+                font-medium
+                text-white
+                shadow-lg
+                transition
+                hover:scale-105
+                hover:bg-[#333333]
+              "
+              onClick={() => setIsOpen(true)}
+            >
+              ✨ ฝากคำอวยพร
+            </Button>
+          </Card>
+        </section>
+      ) : (
+        <section
+          className="
+            mx-auto
+            w-full
+            max-w-[1600px]
+            columns-1
+            gap-8
+            sm:columns-2
+            lg:columns-4
+          "
+        >
+          {notes.map((note) => (
+            <div
+              key={note.id}
+              className="
+                mb-8
+                break-inside-avoid
+              "
+            >
+              <NoteCard
+                name={note.name}
+                message={note.message}
+                imageUrl={note.imageUrl ?? undefined}
+                createdAt={note.createdAt}
+              />
+            </div>
+          ))}
+        </section>
+      )}
 
       {/* Floating action */}
-      <Button
-        className="
+      {notes.length > 0 && (
+        <Button
+          className="
           fixed
           bottom-8
           left-1/2
@@ -134,10 +222,11 @@ export default function Home() {
           hover:scale-105
           hover:bg-[#333333]
         "
-        onClick={() => setIsOpen(true)}
-      >
-        ✨ ร่วมเขียนคำอวยพร
-      </Button>
+          onClick={() => setIsOpen(true)}
+        >
+          ✨ ฝากคำอวยพร
+        </Button>
+      )}
 
       <NoteForm open={isOpen} onOpenChange={setIsOpen} />
     </main>
