@@ -45,13 +45,7 @@ export default function NoteCard({
         {name}
       </h2>
 
-      <p
-        className="
-      mt-2
-      text-base
-      text-neutral-500
-    "
-      >
+      <p className="mt-2 text-base text-neutral-500" >
         {createdAt}
       </p>
 
@@ -63,32 +57,15 @@ export default function NoteCard({
             alt={name}
             width={400}
             height={400}
-            className="
-              h-auto
-              w-full
-              object-cover
-            "
+            className="h-auto w-full object-cover"
           />
         </div>
       )}
 
 
-      <div
-        className="
-      my-6
-      h-px
-      bg-[#E8E1D5]
-    "
-      />
+      <div className="my-6 h-px bg-[#E8E1D5]" />
 
-      <p
-        className="
-      whitespace-pre-wrap
-      text-xl
-      leading-9
-      text-[#333333]
-    "
-      >
+      <p className="whitespace-pre-wrap text-xl leading-9 text-[#333333]">
         {message}
       </p>
     </article>

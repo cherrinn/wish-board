@@ -71,13 +71,7 @@ export default function Home() {
           text-center
         "
       >
-        <div
-          className="
-            mb-6
-            text-xl
-            text-[#B08D57]
-          "
-        >
+        <div className="mb-6 text-xl text-[#B08D57]">
           ✦
         </div>
 
@@ -94,13 +88,7 @@ export default function Home() {
           บันทึกความรู้สึกดี ๆ
         </h1>
 
-        <p
-          className="
-            mt-6
-            text-lg
-            text-neutral-500
-          "
-        >
+        <p className="mt-6 text-lg text-neutral-500">
           ทุกข้อความจะถูกเก็บไว้เป็นความทรงจำที่สวยงาม
         </p>
       </section>
@@ -108,22 +96,19 @@ export default function Home() {
       {/* Notes */}
       <section
         className="
-    mx-auto
-    w-full
-    max-w-[1600px]
-    columns-1
-    gap-8
-    sm:columns-2
-    lg:columns-4
-  "
+          mx-auto
+          w-full
+          max-w-[1600px]
+          columns-1
+          gap-8
+          sm:columns-2
+          lg:columns-4
+        "
       >
         {mockNotes.map((note) => (
           <div
             key={note.id}
-            className="
-              mb-8
-              break-inside-avoid
-            "
+            className="mb-8 break-inside-avoid"
           >
             <NoteCard {...note} />
           </div>
