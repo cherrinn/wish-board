@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import NoteCard from "@/components/NoteCard";
+import { Button } from "@/app/components/ui/button";
+import NoteCard from "@/app/components/NoteCard";
 import { useState } from "react";
-import NoteForm from "@/components/NoteForm";
+import NoteForm from "@/app/components/NoteForm";
 
 const mockNotes = [
   {
