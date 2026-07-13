@@ -26,7 +26,7 @@ export default function NoteCard({
         border
         border-[#E8E1D5]
         bg-white
-        p-6
+        p-4
         shadow-sm
         transition
         duration-300
@@ -45,7 +45,7 @@ export default function NoteCard({
         {name}
       </h2>
 
-      <p className="mt-2 text-base text-neutral-500">{date}</p>
+      <p className="text-sm text-neutral-500">{date}</p>
 
       {imageUrl && (
         <div className="my-4 overflow-hidden rounded-xl">
@@ -59,7 +59,7 @@ export default function NoteCard({
         </div>
       )}
 
-      <div className="my-6 h-px bg-[#E8E1D5]" />
+      <div className="my-4 h-px bg-[#E8E1D5]" />
 
       <p className="whitespace-pre-wrap text-base leading-9 text-[#333333]">
         {message}

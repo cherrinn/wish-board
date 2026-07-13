@@ -138,11 +138,11 @@ export default function Home() {
         <h1
           className="
             font-serif
-             text-xl
+            text-2xl
             font-medium
             tracking-tight
             text-[#1C1C1C]
-            md:text-5xl
+            md:text-4xl
           "
         >
           บันทึกความรู้สึกดี ๆ
@@ -268,7 +268,7 @@ export default function Home() {
             fixed
             bottom-8
             left-1/2
-            h-16
+            h-14
             -translate-x-1/2
             rounded-full
             bg-[#1C1C1C]

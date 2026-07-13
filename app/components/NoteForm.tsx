@@ -20,15 +20,9 @@ import { Note } from "../types/Note";
 import { z } from "zod";
 
 const noteSchema = z.object({
-  name: z
-    .string()
-    .min(1, "กรุณาใส่ชื่อ")
-    .max(35, "ชื่อยาวเกินไป"),
+  name: z.string().min(1, "กรุณาใส่ชื่อ").max(35, "ชื่อยาวเกินไป"),
 
-  message: z
-    .string()
-    .min(1, "กรุณาเขียนคำอวยพร")
-    .max(500, "ข้อความยาวเกินไป"),
+  message: z.string().min(1, "กรุณาเขียนคำอวยพร").max(500, "ข้อความยาวเกินไป"),
 });
 
 type NoteFormData = z.infer<typeof noteSchema>;
@@ -51,10 +45,7 @@ export default function NoteForm({
     handleSubmit,
     watch,
     reset,
-    formState: {
-      errors,
-      isValid,
-    },
+    formState: { errors, isValid },
   } = useForm<NoteFormData>({
     resolver: zodResolver(noteSchema),
     mode: "onChange",
@@ -84,27 +75,22 @@ export default function NoteForm({
           overflow-hidden
           rounded-3xl
           bg-white
-          p-8
+          p-6
           shadow-2xl
           sm:max-w-lg
         "
       >
         <DialogHeader>
-          <DialogTitle className="font-serif text-xl font-medium text-[#1C1C1C]">
+          <DialogTitle className="font-serif text-2xl font-medium text-[#1C1C1C]">
             ✨ ฝากข้อความจากใจ ✨
           </DialogTitle>
 
-          <DialogDescription className="mt-3 !text-base !leading-8 !text-[#6B645B]">
+          <DialogDescription className="!text-base !leading-8 !text-[#6B645B]">
             เขียนคำอวยพรดี ๆ เพื่อเก็บไว้เป็นความทรงจำ
           </DialogDescription>
         </DialogHeader>
 
-
-        <form
-          onSubmit={handleSubmit(submitForm)}
-          className="mt-8 space-y-6"
-        >
-
+        <form onSubmit={handleSubmit(submitForm)} className="space-y-4">
           {/* Name */}
           <div>
             <label className="mb-2 block text-lg font-medium text-[#333333]">
@@ -116,22 +102,19 @@ export default function NoteForm({
               placeholder="ชื่อของคุณ"
               maxLength={35}
               className="
-                h-16
+                h-12
                 rounded-xl
                 !text-lg
                 !leading-8
-                placeholder:text-lg
+                placeholder:text-base
                 placeholder:text-neutral-400
               "
             />
 
             {errors.name && (
-              <p className="mt-2 text-sm text-red-500">
-                {errors.name.message}
-              </p>
+              <p className="mt-2 text-sm text-red-500">{errors.name.message}</p>
             )}
           </div>
-
 
           {/* Message */}
           <div>
@@ -144,14 +127,13 @@ export default function NoteForm({
               maxLength={500}
               placeholder="เขียนคำอวยพร..."
               className="
-                min-h-48
+                min-h-42
                 rounded-xl
-                p-5
                 resize-none
                 whitespace-pre-wrap
                 !text-lg
                 !leading-9
-                placeholder:text-lg
+                placeholder:text-base
                 placeholder:text-neutral-400
               "
             />
@@ -162,32 +144,91 @@ export default function NoteForm({
               </p>
             )}
 
-            <p className="mt-2 text-right text-sm text-neutral-400">
+            <p className="text-right text-sm text-neutral-400">
               {message.length}/500
             </p>
           </div>
 
-
           {/* Image */}
           <div>
-            <label className="mb-2 block text-lg font-medium text-[#333333]">
+            <label className="mb-3 block text-lg font-medium text-[#333333]">
               รูปภาพ (ถ้ามี)
             </label>
 
-            <Input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
+            {image ? (
+              <div
+                className="
+        flex
+        items-center
+        justify-between
+        rounded-xl
+        border
+        border-[#E8DCC8]
+        bg-white
+        px-4
+        py-3
+      "
+              >
+                <div className="flex items-center gap-3">
+                  <span className="max-w-[220px] truncate text-sm text-[#6B645B]">
+                    {image.name}
+                  </span>
+                </div>
 
-                if (file) {
-                  setImage(file);
-                }
-              }}
-              className="h-14 rounded-xl text-xl"
-            />
+                <button
+                  type="button"
+                  onClick={() => setImage(null)}
+                  className="
+          rounded-full
+          px-3
+          py-1
+          text-sm
+          text-red-400
+          transition
+          hover:bg-red-50
+        "
+                >
+                  ลบ
+                </button>
+              </div>
+            ) : (
+              <label
+                className="
+                  flex
+                  h-14
+                  cursor-pointer
+                  items-center
+                  justify-center
+                  gap-3
+                  rounded-xl
+                  border
+                  border-[#E8DCC8]
+                  bg-white
+                  text-base
+                  font-medium
+                  text-[#6B645B]
+                  transition
+                  hover:border-[#D4AF37]
+                  hover:bg-[#FAF7F2]
+                "
+              >
+                <span>เลือกรูปภาพ</span>
+
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+
+                    if (file) {
+                      setImage(file);
+                    }
+                  }}
+                />
+              </label>
+            )}
           </div>
-
 
           {/* Submit */}
           <Button
@@ -209,7 +250,6 @@ export default function NoteForm({
           >
             ✨ ส่งคำอวยพร
           </Button>
-
         </form>
       </DialogContent>
     </Dialog>
