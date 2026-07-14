@@ -12,7 +12,7 @@ export default function StatsHeader({ notes }: StatsHeaderProps) {
   }, {});
 
   return (
-    <section className="mx-auto mb-12 max-w-3xl space-y-4 text-center">
+    <section className="mx-auto mb-8 max-w-3xl space-y-4 text-center">
       <div className="text-xl text-[#B08D57]">✦</div>
 
       <h1 className="text-2xl font-medium tracking-tight text-[#1C1C1C] md:text-4xl">
