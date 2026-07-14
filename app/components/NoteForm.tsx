@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -21,7 +21,10 @@ import { noteSchema, NoteFormData } from "@/app/schemas";
 interface NoteFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (note: Note, image: File | null) => void;
+  onSubmit: (
+    note: Pick<Note, "name" | "message" | "image_url">,
+    image: File | null,
+  ) => void;
 }
 
 export default function NoteForm({
@@ -34,7 +37,7 @@ export default function NoteForm({
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     reset,
     formState: { errors, isValid },
   } = useForm<NoteFormData>({
@@ -42,20 +45,16 @@ export default function NoteForm({
     mode: "onChange",
   });
 
-  const message = watch("message") ?? "";
+  const message = useWatch({ control, name: "message" }) ?? "";
 
   const submitForm = (values: NoteFormData) => {
     const newNote = {
-      id: Date.now(),
       name: values.name,
       message: values.message,
-      created_at: new Date().toISOString(),
       image_url: "",
-      card_number: 0,
     };
 
     onSubmit(newNote, image);
-
     reset();
     setImage(null);
   };
