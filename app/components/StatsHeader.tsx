@@ -1,12 +1,15 @@
 import { NoteResponse } from "@/app/types";
-
+import { categories } from "@/app/constants";
 
 interface StatsHeaderProps {
   notes: NoteResponse[];
 }
 
 export default function StatsHeader({ notes }: StatsHeaderProps) {
-  const imageCount = notes.filter((note) => note.image_url).length;
+  const categoryCount = notes.reduce<Record<string, number>>((acc, note) => {
+    acc[note.category] = (acc[note.category] ?? 0) + 1;
+    return acc;
+  }, {});
 
   return (
     <section className="mx-auto mb-12 max-w-3xl space-y-4 text-center">
@@ -20,22 +23,39 @@ export default function StatsHeader({ notes }: StatsHeaderProps) {
         ทุกข้อความจะถูกเก็บไว้เป็นความทรงจำที่สวยงาม
       </p>
 
-      <div className="flex flex-wrap items-center justify-center gap-5 text-sm text-neutral-500">
-        <div className="flex items-center gap-2">
-          <span>💌</span>
-          <span>
-            <strong className="text-[#1C1C1C]">{notes.length}</strong> คำอวยพร
-          </span>
-        </div>
-
-        <span className="text-neutral-300">|</span>
-
-        <div className="flex items-center gap-2">
-          <span>📷</span>
-          <span>
-            <strong className="text-[#1C1C1C]">{imageCount}</strong> รูปภาพ
-          </span>
-        </div>
+      <div
+        className="
+          flex
+          flex-wrap
+          items-center
+          justify-center
+          gap-x-4
+          gap-y-2
+          text-sm
+          text-neutral-500
+        "
+      >
+        {categories.map((category, index) => (
+          <div
+            key={category.value}
+            className="flex items-center gap-1.5 text-[12px]"
+          >
+            <span>{category.icon}</span>
+            <span className="font-semibold text-[#1C1C1C]">
+              {categoryCount[category.value] ?? 0}
+            </span>
+            <span>{category.label}</span>
+            {index < categories.length - 1 && (
+              <span className="ml-2 text-neutral-300">|</span>
+            )}
+          </div>
+        ))}
+      </div>
+      <hr />
+      <div className="pt-2 text-md">
+        💌 ทั้งหมด{" "}
+        <span className="font-semibold text-[#1C1C1C]">{notes.length}</span>{" "}
+        ข้อความ
       </div>
     </section>
   );

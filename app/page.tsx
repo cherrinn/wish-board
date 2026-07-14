@@ -17,10 +17,7 @@ export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const { notes, isLoading, error, addNote } = useNotes();
 
-  const handleAddNote = async (
-    newNote: NoteRequest,
-    image: File | null,
-  ) => {
+  const handleAddNote = async (newNote: NoteRequest, image: File | null) => {
     try {
       await addNote(newNote, image);
       setIsOpen(false);
@@ -33,7 +30,6 @@ export default function Home() {
   return (
     <main className="relative isolate min-h-screen overflow-hidden bg-[#FAF7F2] px-6 py-16 md:px-12 lg:px-24">
       <BackgroundDecor />
-
       <div className="relative z-10">
         <StatsHeader notes={notes} />
 
