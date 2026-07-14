@@ -9,7 +9,6 @@ export { default as AddButton } from "./AddButton";
 export { default as NoteCard } from "./NoteCard";
 export { default as NoteForm } from "./NoteForm";
 export { default as Sparkles } from "./Sparkles";
-export { default as NotePreview } from './NotePreview'
 
 // UI primitives (shadcn-style)
 export { Badge } from "./ui/badge";

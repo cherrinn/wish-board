@@ -19,14 +19,17 @@ export default function NoteCard({
   message,
   cardNo,
   category,
-  color,
+  color = "gold",
 }: NoteCardProps) {
   const date = new Date(createdAt).toLocaleDateString("th-TH", {
     day: "numeric",
     month: "long",
     year: "numeric",
   });
-  const currentCategory = categories.find((item) => item.value === category);
+  const currentCategory =
+    category === "type"
+      ? {label: 'ประเภทคำอวยพร', icon: '💌'}
+      : categories.find((item) => item.value === category);
   const currentColor = cardColors.find((item) => item.value === color);
 
   return (

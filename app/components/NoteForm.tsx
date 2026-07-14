@@ -17,10 +17,10 @@ import { Textarea } from "@/app/components/ui/textarea";
 
 import { noteSchema, NoteFormData } from "@/app/schemas";
 import { categories } from "@/app/constants";
-import NotePreview from "./NotePreview";
+// import NotePreview from "./NotePreview";
 import { NoteRequest } from "@/app/types";
 import { cardColors } from "@/app/constants/card";
-import { AddButton } from "@/app/components";
+import { AddButton, NoteCard } from "@/app/components";
 
 interface NoteFormProps {
   open: boolean;
@@ -272,7 +272,8 @@ export default function NoteForm({
                   {...register("message")}
                   maxLength={500}
                   placeholder={
-                    currentCategory?.placeholder ?? "เขียนข้อความและความรู้สึกตรงนี้..."
+                    currentCategory?.placeholder ??
+                    "เขียนข้อความและความรู้สึกตรงนี้..."
                   }
                   className="
                   min-h-42
@@ -472,12 +473,13 @@ export default function NoteForm({
             >
               ✨ ตัวอย่างการ์ด
             </h3>
-
-            <NotePreview
-              name={name}
-              message={message}
-              category={selectedCategory}
-              image={image}
+            <NoteCard
+              name={name || "ชื่อของคุณ"}
+              message={message || "ข้อความของคุณจะปรากฏที่นี่"}
+              imageUrl={image ? URL.createObjectURL(image) : ""}
+              createdAt={new Date().toLocaleDateString()}
+              cardNo={1}
+              category={currentCategory?.value || "type"}
               color={selectedColor}
             />
           </div>
