@@ -312,70 +312,82 @@ export default function NoteForm({
 
               {/* Image */}
               <div>
-                <label
-                  className="
-                  mb-3
-                  block
-                  text-lg
-                  font-medium
-                  text-[#333333]
-                "
-                >
-                  รูปภาพ (ถ้ามี)
-                </label>
+                <div className="mb-3 flex items-center justify-between">
+                  <label
+                    className="
+                      text-lg
+                      font-medium
+                      text-[#333333]
+                    "
+                  >
+                    รูปภาพ (ถ้ามี)
+                  </label>
 
-                {image ? (
+                  {!image && (
+                    <label
+                      className="
+                        inline-flex
+                        h-9
+                        cursor-pointer
+                        items-center
+                        gap-1
+                        rounded-full
+                        border
+                        border-[#E8DCC8]
+                        px-4
+                        text-sm
+                        text-[#8A6E3B]
+                        transition
+                        hover:bg-[#FAF7F2]
+                      "
+                    >
+                      📷 เพิ่มรูป
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+
+                          if (file) {
+                            setImage(file);
+                          }
+                        }}
+                      />
+                    </label>
+                  )}
+                </div>
+
+                {image && (
                   <div
                     className="
-                    flex
-                    items-center
-                    justify-between
-                    rounded-full
-                    border
-                    border-[#E8DCC8]
-                    px-4
-                    py-3
-                  "
+                      flex
+                      items-center
+                      justify-between
+                      rounded-xl
+                      border
+                      border-[#E8DCC8]
+                      bg-[#FAF7F2]
+                      px-4
+                      py-2
+                    "
                   >
-                    <span className="truncate text-sm">{image.name}</span>
+                    <span className="max-w-[250px] truncate text-sm text-[#6B645B]">
+                      🖼️ {image.name}
+                    </span>
 
                     <button
                       type="button"
                       onClick={() => setImage(null)}
-                      className="text-sm text-red-400"
+                      className="
+                        text-sm
+                        text-red-400
+                        hover:text-red-500
+                      "
                     >
                       ลบ
                     </button>
                   </div>
-                ) : (
-                  <label
-                    className="
-                    flex
-                    h-12
-                    cursor-pointer
-                    items-center
-                    justify-center
-                    rounded-full
-                    border
-                    border-[#E8DCC8]
-                    text-[#6B645B]
-                    hover:bg-[#FAF7F2]
-                  "
-                  >
-                    เลือกรูปภาพ
-                    <input
-                      type="file"
-                      accept="image/*"
-                      className="hidden"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-
-                        if (file) {
-                          setImage(file);
-                        }
-                      }}
-                    />
-                  </label>
                 )}
               </div>
 
@@ -398,7 +410,6 @@ export default function NoteForm({
           </div>
 
           {/* RIGHT PREVIEW CARD */}
-
           <div
             className="
             hidden
