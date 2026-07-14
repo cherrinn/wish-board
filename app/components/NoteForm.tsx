@@ -82,7 +82,7 @@ export default function NoteForm({
         "
       >
         <DialogHeader>
-          <DialogTitle className="font-serif text-2xl font-medium text-[#1C1C1C]">
+          <DialogTitle className="text-2xl font-medium text-[#1C1C1C]">
             ✨ ฝากข้อความจากใจ ✨
           </DialogTitle>
 

@@ -137,7 +137,6 @@ export default function Home() {
 
         <h1
           className="
-            font-serif
             text-2xl
             font-medium
             tracking-tight
@@ -189,7 +188,6 @@ export default function Home() {
           >
             <h2
               className="
-                font-serif
                 text-2xl
                 font-medium
                 leading-tight
