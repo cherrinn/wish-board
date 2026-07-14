@@ -93,8 +93,8 @@ export default function NoteCard({
           <h2
             className="
             text-lg
-            font-medium
-            text-[#1C1C1C]
+            font-semibold
+            text-[#1C1C1C]/80
           "
           >
             {name}
