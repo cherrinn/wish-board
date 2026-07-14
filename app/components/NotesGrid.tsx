@@ -7,7 +7,7 @@ interface NotesGridProps {
 
 export default function NotesGrid({ notes }: NotesGridProps) {
   return (
-    <section className="mx-auto w-full max-w-300 columns-1 gap-8 sm:columns-2 lg:columns-4">
+    <section className="mx-auto w-full max-w-365 columns-1 gap-8 sm:columns-2 lg:columns-4">
       {notes.map((note) => (
         <div key={note.id} className="mb-8 break-inside-avoid">
           <NoteCard
