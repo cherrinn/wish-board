@@ -1,4 +1,5 @@
-import { Note } from "@/app/types";
+
+import { NoteRequest, NoteResponse } from "@/app/types";
 import { supabase } from "./supabase";
 
 /**
@@ -20,7 +21,7 @@ async function uploadNoteImage(image: File): Promise<string> {
   return data.publicUrl;
 }
 
-export async function fetchNotes(): Promise<Note[]> {
+export async function fetchNotes(): Promise<NoteResponse[]> {
   const { data, error } = await supabase
     .from("notes")
     .select("*")
@@ -32,9 +33,9 @@ export async function fetchNotes(): Promise<Note[]> {
 }
 
 export async function createNote(
-  note: Pick<Note, "name" | "message">,
+  note: NoteRequest,
   image: File | null,
-): Promise<Note> {
+): Promise<NoteResponse> {
   const imageUrl = image ? await uploadNoteImage(image) : "";
 
   const { data, error } = await supabase
@@ -44,6 +45,7 @@ export async function createNote(
       message: note.message,
       image_url: imageUrl,
       created_at: new Date().toISOString(),
+      category: note.category
     })
     .select()
     .single();

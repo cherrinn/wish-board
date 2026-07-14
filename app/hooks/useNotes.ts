@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { Note } from "@/app/types";
 import { createNote, fetchNotes } from "@/app/lib";
+import { NoteRequest, NoteResponse } from "@/app/types";
 
 export function useNotes() {
-  const [notes, setNotes] = useState<Note[]>([]);
+  const [notes, setNotes] = useState<NoteResponse[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -27,7 +27,7 @@ export function useNotes() {
   }, []);
 
   const addNote = useCallback(
-    async (note: Pick<Note, "name" | "message">, image: File | null) => {
+    async (note: NoteRequest, image: File | null) => {
       const saved = await createNote(note, image);
       setNotes((prev) => [saved, ...prev]);
       return saved;

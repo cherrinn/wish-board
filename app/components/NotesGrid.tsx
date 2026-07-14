@@ -1,8 +1,8 @@
 import { NoteCard } from "@/app/components";
-import { Note } from "@/app/types";
+import { NoteResponse } from "@/app/types";
 
 interface NotesGridProps {
-  notes: Note[];
+  notes: NoteResponse[];
 }
 
 export default function NotesGrid({ notes }: NotesGridProps) {

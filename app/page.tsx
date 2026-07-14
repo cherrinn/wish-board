@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Note } from "@/app/types";
 import { useNotes } from "@/app/hooks";
 import {
   FloatingAddButton,
@@ -12,13 +11,14 @@ import {
   NoteForm,
 } from "@/app/components";
 import { toast } from "sonner";
+import { NoteRequest } from "@/app/types";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const { notes, isLoading, error, addNote } = useNotes();
 
   const handleAddNote = async (
-    newNote: Pick<Note, "name" | "message">,
+    newNote: NoteRequest,
     image: File | null,
   ) => {
     try {

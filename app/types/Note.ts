@@ -1,4 +1,10 @@
-export interface Note {
+export interface NoteRequest {
+  name: string;
+  message: string;
+  category: string
+}
+
+export interface NoteResponse {
   id: number;
   name: string;
   created_at: string;

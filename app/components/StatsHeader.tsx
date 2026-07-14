@@ -1,7 +1,8 @@
-import { Note } from "@/app/types";
+import { NoteResponse } from "@/app/types";
+
 
 interface StatsHeaderProps {
-  notes: Note[];
+  notes: NoteResponse[];
 }
 
 export default function StatsHeader({ notes }: StatsHeaderProps) {

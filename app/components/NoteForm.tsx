@@ -16,16 +16,16 @@ import { Button } from "@/app/components/ui/button";
 import { Input } from "@/app/components/ui/input";
 import { Textarea } from "@/app/components/ui/textarea";
 
-import { Note } from "@/app/types";
 import { noteSchema, NoteFormData } from "@/app/schemas";
 import { categories } from "@/app/constants";
 import NotePreview from "./NotePreview";
+import { NoteRequest } from "@/app/types";
 
 interface NoteFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSubmit: (
-    note: Pick<Note, "name" | "message" | "image_url">,
+    note: NoteRequest,
     image: File | null,
   ) => void;
 }
@@ -374,7 +374,7 @@ export default function NoteForm({
                       py-2
                     "
                   >
-                    <span className="max-w-[250px] truncate text-sm text-[#6B645B]">
+                    <span className="max-w-62.5 truncate text-sm text-[#6B645B]">
                       🖼️ {image.name}
                     </span>
 
