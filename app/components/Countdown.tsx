@@ -2,46 +2,47 @@
 
 import { useEffect, useState } from "react";
 
+interface CountdownProps {
+  onExpire: () => void;
+}
+
 const TARGET_DATE = new Date("2026-10-01T00:00:00");
 
 function calculateTimeLeft() {
   const difference = TARGET_DATE.getTime() - new Date().getTime();
 
-  if (difference <= 0) {
-    return {
-      days: 0,
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-    };
-  }
-
   return {
-    days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-    hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-    minutes: Math.floor((difference / (1000 * 60)) % 60),
-    seconds: Math.floor((difference / 1000) % 60),
+    expired: difference <= 0,
+    days: Math.max(Math.floor(difference / (1000 * 60 * 60 * 24)), 0),
+    hours: Math.max(Math.floor((difference / (1000 * 60 * 60)) % 24), 0),
+    minutes: Math.max(Math.floor((difference / (1000 * 60)) % 60), 0),
+    seconds: Math.max(Math.floor((difference / 1000) % 60), 0),
   };
 }
 
-export default function Countdown() {
+export default function Countdown({ onExpire }: CountdownProps) {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
+    const updateCountdown = () => {
+      const result = calculateTimeLeft();
+
+      setTimeLeft(result);
+
+      if (result.expired) {
+        onExpire();
+      }
+    };
+
+    updateCountdown();
+
+    const timer = setInterval(updateCountdown, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [onExpire]);
 
   return (
-    <section
-      className="
-    mx-auto
-    max-w-xl
-  "
-    >
+    <section className="mx-auto max-w-xl">
       <div
         className="
           mt-5

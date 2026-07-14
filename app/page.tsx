@@ -15,6 +15,7 @@ import { NoteRequest } from "@/app/types";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isHideButton, setIsHideButton] = useState(false);
   const { notes, isLoading, error, addNote } = useNotes();
 
   const handleAddNote = async (newNote: NoteRequest, image: File | null) => {
@@ -32,7 +33,7 @@ export default function Home() {
     <main className="relative isolate min-h-screen overflow-hidden bg-[#FAF7F2] px-6 py-16 md:px-12 lg:px-24">
       <BackgroundDecor />
       <div className="relative z-10">
-        <StatsHeader notes={notes} />
+        <StatsHeader notes={notes}  onCountdownEnd={() => setIsHideButton(true)}/>
 
         {isLoading ? (
           <section className="flex min-h-[45vh] items-center justify-center">
@@ -49,7 +50,7 @@ export default function Home() {
         )}
       </div>
 
-      {notes.length > 0 && (
+      {notes.length > 0 && !isHideButton &&(
         <AddButton
           onClick={() => setIsOpen(true)}
           classNameCustom="      

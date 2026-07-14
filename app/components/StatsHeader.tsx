@@ -4,9 +4,13 @@ import Countdown from "./Countdown";
 
 interface StatsHeaderProps {
   notes: NoteResponse[];
+  onCountdownEnd: () => void;
 }
 
-export default function StatsHeader({ notes }: StatsHeaderProps) {
+export default function StatsHeader({
+  notes,
+  onCountdownEnd,
+}: StatsHeaderProps) {
   const categoryCount = notes.reduce<Record<string, number>>((acc, note) => {
     acc[note.category] = (acc[note.category] ?? 0) + 1;
     return acc;
@@ -72,17 +76,12 @@ export default function StatsHeader({ notes }: StatsHeaderProps) {
         "
       >
         {categories.map((category, index) => (
-          <div
-            key={category.value}
-            className="flex items-center gap-1.5"
-          >
+          <div key={category.value} className="flex items-center gap-1.5">
             <span>
               {category.icon} {category.label}
             </span>
 
-            <span
-              className="font-semibold text-[#1C1C1C]"
-            >
+            <span className="font-semibold text-[#1C1C1C]">
               {categoryCount[category.value] ?? 0}
             </span>
 
