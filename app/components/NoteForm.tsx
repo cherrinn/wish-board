@@ -20,14 +20,12 @@ import { noteSchema, NoteFormData } from "@/app/schemas";
 import { categories } from "@/app/constants";
 import NotePreview from "./NotePreview";
 import { NoteRequest } from "@/app/types";
+import { cardColors } from "../constants/card";
 
 interface NoteFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (
-    note: NoteRequest,
-    image: File | null,
-  ) => void;
+  onSubmit: (note: NoteRequest, image: File | null) => void;
 }
 
 export default function NoteForm({
@@ -37,6 +35,7 @@ export default function NoteForm({
 }: NoteFormProps) {
   const [image, setImage] = useState<File | null>(null);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedColor, setSelectedColor] = useState("gold");
 
   const currentCategory = categories.find(
     (item) => item.value === selectedCategory,
@@ -87,6 +86,7 @@ export default function NoteForm({
       message: values.message,
       image_url: "",
       category: values.category,
+      card_color: selectedColor,
     };
 
     onSubmit(newNote, image);
@@ -393,6 +393,53 @@ export default function NoteForm({
                 )}
               </div>
 
+              {/* Card Color */}
+                <div className="mb-3 flex items-center justify-between">
+                <label
+                  className="
+                    mb-3
+                    block
+                    text-lg
+                    font-medium
+                    text-[#333333]
+                  "
+                >
+                  สีการ์ด
+                </label>
+
+                <div className="flex gap-3">
+                  {cardColors.map((item) => {
+                    const selected = selectedColor === item.value;
+
+                    return (
+                      <button
+                        key={item.value}
+                        type="button"
+                        onClick={() => {
+                          setSelectedColor(item.value);
+
+                          setValue("card_color", item.value, {
+                            shouldValidate: true,
+                            shouldDirty: true,
+                          });
+                        }}
+                        className={`
+                          h-7
+                          w-7
+                          rounded-full
+                          border-2
+                          transition
+                          ${selected ? "border-[#1C1C1C] scale-110" : "border-transparent"}
+                        `}
+                        style={{
+                          backgroundColor: item.code,
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+
               <Button
                 type="submit"
                 disabled={!isValid}
@@ -438,6 +485,7 @@ export default function NoteForm({
               message={message}
               category={selectedCategory}
               image={image}
+              color={selectedColor}
             />
           </div>
         </div>

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { categories } from "@/app/constants";
+import { cardColors } from "../constants/card";
 
 interface NotePreviewProps {
   name?: string;
@@ -7,6 +8,7 @@ interface NotePreviewProps {
   category?: string;
   image?: File | null;
   createdAt?: string;
+  color: string;
 }
 
 export default function NotePreview({
@@ -15,6 +17,7 @@ export default function NotePreview({
   category,
   image,
   createdAt,
+  color = "gold",
 }: NotePreviewProps) {
   const date = new Date(createdAt ?? new Date()).toLocaleDateString("en-US", {
     day: "numeric",
@@ -23,25 +26,44 @@ export default function NotePreview({
   });
 
   const currentCategory = categories.find((item) => item.value === category);
+  const currentColor = cardColors.find((item) => item.value === color);
 
   const imageUrl = image ? URL.createObjectURL(image) : null;
 
   return (
-    <article
+    <div
       className="
-        relative
-        rounded-2xl
+        rounded-3xl
         border
-        border-[#E8E1D5]
-        bg-white
-        p-4
-        pt-12
-        shadow-sm
+        p-1.5
+        transition
+        duration-300
+        hover:-translate-y-1
+        hover:shadow-lg
       "
+      style={{
+        backgroundColor: `${currentColor?.code}20`,
+        borderColor: currentColor?.code,
+      }}
     >
-      {/* Category */}
       <div
         className="
+        rounded-2xl
+        bg-white
+        p-1.5
+      "
+      >
+        <article
+          className="
+          relative
+          rounded-xl
+          p-4
+          pt-12
+        "
+        >
+          {/* Category */}
+          <div
+            className="
           absolute
           right-4
           top-4
@@ -54,42 +76,42 @@ export default function NotePreview({
           text-xs
           text-[#8A6E3B]
         "
-      >
-        {currentCategory?.icon ?? "🌸"}{" "}
-        {currentCategory?.label ?? "ประเภทคำอวยพร"}
-      </div>
+          >
+            {currentCategory?.icon ?? "🌸"}{" "}
+            {currentCategory?.label ?? "ประเภทคำอวยพร"}
+          </div>
 
-      {/* Name */}
-      <h2
-        className="
+          {/* Name */}
+          <h2
+            className="
           text-lg
           font-medium
           text-[#1C1C1C]
         "
-      >
-        {name || "ชื่อของคุณ"}
-      </h2>
+          >
+            {name || "ชื่อของคุณ"}
+          </h2>
 
-      {/* Date */}
-      <div
-        className="
+          {/* Date */}
+          <div
+            className="
           mt-2
           flex
           items-center
           justify-between
         "
-      >
-        <p
-          className="
+          >
+            <p
+              className="
             text-sm
             text-neutral-500
           "
-        >
-          {date}
-        </p>
+            >
+              {date}
+            </p>
 
-        <span
-          className="
+            <span
+              className="
             rounded-full
             bg-[#F5F5F5]
             px-3
@@ -97,46 +119,46 @@ export default function NotePreview({
             text-xs
             text-neutral-500
           "
-        >
-          💌 Preview
-        </span>
-      </div>
+            >
+              💌 Preview
+            </span>
+          </div>
 
-      {/* Image */}
-      {imageUrl && (
-        <div
-          className="
+          {/* Image */}
+          {imageUrl && (
+            <div
+              className="
             my-4
             overflow-hidden
             rounded-xl
           "
-        >
-          <Image
-            src={imageUrl}
-            alt={name ?? ""}
-            width={400}
-            height={400}
-            className="
+            >
+              <Image
+                src={imageUrl}
+                alt={name ?? ""}
+                width={400}
+                height={400}
+                className="
               h-auto
               w-full
               object-cover
             "
-          />
-        </div>
-      )}
+              />
+            </div>
+          )}
 
-      {/* Divider */}
-      <div
-        className="
+          {/* Divider */}
+          <div
+            className="
           my-4
           h-px
           bg-[#E8E1D5]
         "
-      />
+          />
 
-      {/* Message */}
-      <p
-        className="
+          {/* Message */}
+          <p
+            className="
           flex
           flex-col
           whitespace-pre-wrap
@@ -144,20 +166,22 @@ export default function NotePreview({
           leading-9
           text-[#333333]
         "
-      >
-        <span
-          className="
+          >
+            <span
+              className="
             text-sm
             text-neutral-500
           "
-        >
-          💌 ข้อความจากใจ...
-        </span>
+            >
+              💌 ข้อความจากใจ...
+            </span>
 
-        <span className="pl-4 ">
-          {message || "ข้อความของคุณจะปรากฏที่นี่..."}
-        </span>
-      </p>
-    </article>
+            <span className="pl-4 ">
+              {message || "ข้อความของคุณจะปรากฏที่นี่..."}
+            </span>
+          </p>
+        </article>
+      </div>
+    </div>
   );
 }

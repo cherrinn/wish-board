@@ -1,4 +1,3 @@
-
 import { NoteRequest, NoteResponse } from "@/app/types";
 import { supabase } from "./supabase";
 
@@ -45,7 +44,8 @@ export async function createNote(
       message: note.message,
       image_url: imageUrl,
       created_at: new Date().toISOString(),
-      category: note.category
+      category: note.category,
+      card_color: note.card_color,
     })
     .select()
     .single();

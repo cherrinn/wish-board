@@ -1,7 +1,8 @@
 export interface NoteRequest {
   name: string;
   message: string;
-  category: string
+  category: string;
+  card_color: string;
 }
 
 export interface NoteResponse {
@@ -11,5 +12,6 @@ export interface NoteResponse {
   image_url?: string;
   message: string;
   card_number: number;
-  category: string
+  category: string;
+  card_color: string;
 }

@@ -17,6 +17,7 @@ export default function NotesGrid({ notes }: NotesGridProps) {
             createdAt={note.created_at}
             cardNo={note.card_number}
             category={note.category}
+            color={note.card_color}
           />
         </div>
       ))}
