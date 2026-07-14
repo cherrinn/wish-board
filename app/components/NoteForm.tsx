@@ -108,38 +108,49 @@ export default function NoteForm({
     >
       <DialogContent
         className="
-          overflow-hidden
+          flex
+          max-h-[95vh]
+          w-[calc(100vw-24px)]
+          flex-col
+          overflow-y-auto
           border-0
           bg-transparent
           p-0
           shadow-none
-          ring-0
+          sm:w-full
+                    ring-0
           outline-none
           sm:max-w-6xl
         "
       >
         <div
           className="
-          grid
-          grid-cols-1
-          gap-6
-          lg:grid-cols-[1fr_420px]
-          items-start
-        "
+            grid
+            w-full
+            grid-cols-1
+            gap-4
+            lg:grid-cols-[1fr_420px]
+            lg:gap-6
+            items-start
+          "
         >
           {/* LEFT FORM CARD */}
           <div
             className="
-            rounded-3xl
+              rounded-3xl
             bg-white
-            p-6
-            shadow-xl
-          "
+
+              p-4
+              shadow-xl
+
+              sm:p-6
+            "
           >
             <DialogHeader className="mb-6">
               <DialogTitle
                 className="
-                text-2xl
+                text-xl
+                sm:text-2xl
                 font-medium
                 text-[#1C1C1C]
               "
@@ -455,13 +466,14 @@ export default function NoteForm({
           {/* RIGHT PREVIEW CARD */}
           <div
             className="
-            hidden
-            rounded-3xl
-            bg-[#FAF7F2]
-            p-6
-            shadow-xl
-            lg:block
-          "
+              rounded-3xl
+              bg-white
+
+              p-4
+              shadow-xl
+
+              sm:p-6
+            "
           >
             <h3
               className="
