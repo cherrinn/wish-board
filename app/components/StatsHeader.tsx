@@ -75,7 +75,7 @@ export default function StatsHeader({
       {/* Countdown */}
       <div>
         <Countdown onExpire={onCountdownEnd} />
-        <p className="mt-4 text-sm text-[#8A6E3B]">1 ตุลาคม 2559</p>
+        <p className="mt-4 text-sm text-[#8A6E3B]">1 ตุลาคม 2569</p>
       </div>
 
       {/* Divider */}
