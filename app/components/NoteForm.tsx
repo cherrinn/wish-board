@@ -78,6 +78,7 @@ export default function NoteForm({
     reset();
     setImage(null);
     setSelectedCategory("");
+    setSelectedColor("gold")
   };
 
   const submitForm = (values: NoteFormData) => {
