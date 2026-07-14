@@ -185,7 +185,7 @@ export default function NotePreview({
               💌 ข้อความจากใจ...
             </span>
 
-            <span className="pl-4 ">
+            <span className="mt-4 pl-4">
               {message || "ข้อความของคุณจะปรากฏที่นี่..."}
             </span>
           </p>
