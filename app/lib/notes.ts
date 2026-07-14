@@ -56,8 +56,6 @@ async function uploadNoteImage(image: File): Promise<string> {
   return data.publicUrl;
 }
 
-
-
 export async function fetchNotes(): Promise<NoteResponse[]> {
   const { data, error } =
     await supabase
@@ -77,8 +75,6 @@ export async function fetchNotes(): Promise<NoteResponse[]> {
 
   return data ?? [];
 }
-
-
 
 export async function createNote(
   note: NoteRequest,
