@@ -58,8 +58,8 @@ export default function StatsHeader({
       />
 
       {/* Stats */}
-      <div className="text-sm text-neutral-500">
-        💌 <span className=" font-semibold text-[#1C1C1C]">{notes.length}</span>{" "}
+      <div className="text-md text-neutral-500">
+        <span className=" font-semibold text-[#1C1C1C]">{notes.length}</span>{" "}
         คำอวยพรและความรู้สึก
       </div>
 
