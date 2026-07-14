@@ -37,8 +37,7 @@ export default function StatsHeader({ notes }: StatsHeaderProps) {
               text-[#1C1C1C]
             "
           >
-            <span className="text-xl text-[#B08D57]">✦</span> บันทึกความรู้สึกดี
-            ๆ
+            <span className="text-xl text-[#B08D57]">✦</span> บทส่งท้ายที่แสนพิเศษ
           </h1>
 
           <p
@@ -49,7 +48,7 @@ export default function StatsHeader({ notes }: StatsHeaderProps) {
               text-[#8A8178]
             "
           >
-            ทุกข้อความจะถูกเก็บไว้เป็นความทรงจำที่สวยงาม
+            ทุกถ้อยคำจากใจ จะถูกเก็บไว้เป็นความทรงจำที่งดงาม
           </p>
         </div>
 
@@ -60,7 +59,7 @@ export default function StatsHeader({ notes }: StatsHeaderProps) {
           "
         >
           💌 <span className="font-medium text-[#1C1C1C]">{notes.length}</span>{" "}
-          คำอวยพรจากทุกคน
+          คำอวยพรและความรู้สึก
         </div>
       </div>
 

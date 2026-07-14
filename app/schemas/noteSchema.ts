@@ -15,13 +15,11 @@ const safeString = z
 
 export const noteSchema = z.object({
   name: safeString
-    .min(1, "กรุณาใส่ชื่อ")
-    .max(35, "ชื่อยาวเกินไป"),
+    .min(1, "กรุณาใส่ชื่อ"),
 
   message: safeString
-    .min(1, "กรุณาเขียนคำอวยพร")
-    .max(500, "ข้อความยาวเกินไป"),
-
+    .min(1, "กรุณาเขียนข้อความ"),
+    
   category: z
     .string()
     .min(1, "กรุณาเลือกประเภทคำอวยพร"),

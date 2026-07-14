@@ -12,7 +12,7 @@ interface AddButtonProps {
 export default function AddButton({
   classNameCustom = "",
   onClick,
-  children = "✨ ฝากคำอวยพร",
+  children = "✨ ฝากข้อความจากใจ",
   type = "button",
   disabled = false,
 }: AddButtonProps) {

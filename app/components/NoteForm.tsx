@@ -155,7 +155,7 @@ export default function NoteForm({
                 text-[#6B645B]!
               "
               >
-                เขียนคำอวยพรดี ๆ เพื่อเก็บไว้เป็นความทรงจำ
+                ฝากความรู้สึกดี ๆ ผ่านข้อความเล็ก ๆ ที่มีความหมาย
               </DialogDescription>
             </DialogHeader>
 
@@ -272,7 +272,7 @@ export default function NoteForm({
                   {...register("message")}
                   maxLength={500}
                   placeholder={
-                    currentCategory?.placeholder ?? "เขียนคำอวยพร..."
+                    currentCategory?.placeholder ?? "เขียนข้อความและความรู้สึกตรงนี้..."
                   }
                   className="
                   min-h-42
@@ -305,7 +305,7 @@ export default function NoteForm({
                     {message.length > 100
                       ? "✨ ข้อความนี้อบอุ่นมาก"
                       : message.length > 1
-                        ? "💛 กำลังเขียนความทรงจำ..."
+                        ? "💛 กำลังเขียนความรู้สึก..."
                         : "💌 เริ่มต้นเขียนความรู้สึก"}
                   </span>
 
@@ -446,7 +446,7 @@ export default function NoteForm({
                 disabled={!isValid}
                 classNameCustom="w-full"
               >
-                ✨ ส่งคำอวยพร
+                ✨ ส่งข้อความจากใจ
               </AddButton>
             </form>
           </div>

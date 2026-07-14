@@ -14,12 +14,11 @@ export default function EmptyState({ onAddClick }: EmptyStateProps) {
           <br />
           กำลังจะเริ่มต้น
         </h2>
-
         <p className="text-sm leading-9 text-neutral-500">
-          ฝากคำอวยพรแรกของคุณ เพื่อร่วมสร้างความทรงจำดี ๆ ไว้ที่นี่
+          ฝากคำพูดจากใจของคุณ เพื่อร่วมสร้างความทรงจำดี ๆ ไว้ที่นี่
         </p>
 
-        <AddButton onClick={onAddClick}>✨ ฝากคำอวยพร</AddButton>
+        <AddButton onClick={onAddClick} />
       </Card>
     </section>
   );
