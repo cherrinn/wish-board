@@ -19,7 +19,7 @@ export default function EmptyState({ onAddClick }: EmptyStateProps) {
         </p>
 
         <Button
-          className="mt-6 h-12 rounded-full bg-[#1C1C1C] px-10 text-base text-white shadow-lg transition hover:scale-105 hover:bg-[#333333]"
+          className="h-12 rounded-full bg-[#1C1C1C] px-10 text-base text-white shadow-lg transition hover:scale-105 hover:bg-[#333333]"
           onClick={onAddClick}
         >
           ✨ ฝากคำอวยพร
