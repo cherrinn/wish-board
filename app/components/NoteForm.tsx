@@ -178,10 +178,11 @@ export default function NoteForm({
                   placeholder="ชื่อของคุณ"
                   maxLength={35}
                   className="
-                  h-12
-                  rounded-xl
-                  text-lg!
-                "
+                    h-12
+                    rounded-xl
+                    text-lg!
+                    placeholder:text-sm
+                  "
                 />
 
                 {errors.name && (
@@ -277,9 +278,10 @@ export default function NoteForm({
                   rounded-xl
                   resize-none
                   whitespace-pre-wrap
-                  break-words
+                  wrap-break-words
                   text-lg!
                   leading-9!
+                  placeholder:text-sm
                 "
                 />
 
