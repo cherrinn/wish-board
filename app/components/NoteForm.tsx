@@ -199,9 +199,13 @@ export default function NoteForm({
               placeholder={currentCategory?.placeholder ?? "เขียนคำอวยพร..."}
               className="
                 min-h-42
+                w-full
+                max-w-full
+                overflow-y-auto
                 rounded-xl
                 resize-none
                 whitespace-pre-wrap
+                wrap-break-words
                 text-lg!
                 leading-9!
                 placeholder:text-base
