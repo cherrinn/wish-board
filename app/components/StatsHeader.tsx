@@ -53,9 +53,8 @@ export default function StatsHeader({ notes }: StatsHeaderProps) {
       </div>
       <hr />
       <div className="pt-2 text-md">
-        💌 ทั้งหมด{" "}
-        <span className="font-semibold text-[#1C1C1C]">{notes.length}</span>{" "}
-        ข้อความ
+        💌 <span className="font-semibold text-[#1C1C1C]">{notes.length}</span>{" "}
+        ข้อความจากทุกคน
       </div>
     </section>
   );
