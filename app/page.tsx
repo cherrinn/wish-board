@@ -11,6 +11,7 @@ import {
   NotesGrid,
   NoteForm,
 } from "@/app/components";
+import { toast } from "sonner";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,9 +24,9 @@ export default function Home() {
     try {
       await addNote(newNote, image);
       setIsOpen(false);
+      toast.success("ส่งคำอวยพรเรียบร้อยแล้ว ✨");
     } catch (err) {
-      // TODO: surface this to the user via toast/inline error instead of console
-      console.error(err);
+      toast.error("ไม่สามารถส่งคำอวยพรได้ กรุณาลองใหม่อีกครั้ง");
     }
   };
 
