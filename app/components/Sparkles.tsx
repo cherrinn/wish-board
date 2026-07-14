@@ -35,7 +35,7 @@ export default function Sparkles() {
           className="
             absolute
             text-xl
-            text-[#D4AF37]
+            text-[#e4d4a1]
           "
           animate={{
             opacity: [0.2, 1, 0.2],
