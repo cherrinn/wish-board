@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Badge } from "@/app/components/ui";
 import { categories } from "../constants";
 
 interface NoteCardProps {
@@ -25,9 +24,7 @@ export default function NoteCard({
     year: "numeric",
   });
 
-  const currentCategory = categories.find(
-    (item) => item.value === category,
-  );
+  const currentCategory = categories.find((item) => item.value === category);
 
   return (
     <article
@@ -62,7 +59,7 @@ export default function NoteCard({
           text-[#8A6E3B]
         "
       >
-        {currentCategory?.icon} {currentCategory?.label}
+        {currentCategory?.icon} {currentCategory?.label} #{cardNo}
       </div>
 
       {/* Name */}
@@ -77,14 +74,8 @@ export default function NoteCard({
       </h2>
 
       {/* Date + Card Number */}
-      <div className="mt-2 flex items-center justify-between">
-        <p className="text-sm text-neutral-500">
-          {date}
-        </p>
-
-        <Badge variant="secondary">
-          💌 #{cardNo}
-        </Badge>
+      <div className="flex items-center justify-between">
+        <p className="text-[12px] text-neutral-500">{date}</p>
       </div>
 
       {/* Image */}
@@ -114,13 +105,9 @@ export default function NoteCard({
           text-[#333333]
         "
       >
-        <span className="text-sm text-neutral-500">
-          💌 ข้อความจากใจ...
-        </span>
+        <span className="text-sm text-neutral-500">💌 ข้อความจากใจ...</span>
 
-        <span className="pl-4">
-          {message}
-        </span>
+        <span className="pl-4">{message}</span>
       </p>
     </article>
   );

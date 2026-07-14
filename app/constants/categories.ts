@@ -32,7 +32,7 @@ export const categories = [
   {
     value: "general",
     label: "ทั่วไป",
-    icon: "🌸",
+    icon: "💌",
     placeholder: "ฝากข้อความดี ๆ ที่อยากส่งต่อ...",
   },
 ];
