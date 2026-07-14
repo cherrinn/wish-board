@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useNotes } from "@/app/hooks";
 import {
-  FloatingAddButton,
+  AddButton,
   BackgroundDecor,
   StatsHeader,
   EmptyState,
@@ -49,7 +49,15 @@ export default function Home() {
       </div>
 
       {notes.length > 0 && (
-        <FloatingAddButton onClick={() => setIsOpen(true)} />
+        <AddButton
+          onClick={() => setIsOpen(true)}
+          classNameCustom="      
+            fixed
+            bottom-8
+            right-8
+            z-50
+          "
+        />
       )}
 
       <NoteForm

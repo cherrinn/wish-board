@@ -1,4 +1,5 @@
-import { Button, Card } from "@/app/components/ui";
+import { Card } from "@/app/components/ui";
+import { AddButton } from "@/app/components";
 
 interface EmptyStateProps {
   onAddClick: () => void;
@@ -18,12 +19,7 @@ export default function EmptyState({ onAddClick }: EmptyStateProps) {
           ฝากคำอวยพรแรกของคุณ เพื่อร่วมสร้างความทรงจำดี ๆ ไว้ที่นี่
         </p>
 
-        <Button
-          className="h-12 rounded-full bg-[#1C1C1C] px-10 text-base text-white shadow-lg transition hover:scale-105 hover:bg-[#333333]"
-          onClick={onAddClick}
-        >
-          ✨ ฝากคำอวยพร
-        </Button>
+        <AddButton onClick={onAddClick}>✨ ฝากคำอวยพร</AddButton>
       </Card>
     </section>
   );

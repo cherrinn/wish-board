@@ -12,7 +12,6 @@ import {
   DialogDescription,
 } from "@/app/components/ui/dialog";
 
-import { Button } from "@/app/components/ui/button";
 import { Input } from "@/app/components/ui/input";
 import { Textarea } from "@/app/components/ui/textarea";
 
@@ -20,7 +19,8 @@ import { noteSchema, NoteFormData } from "@/app/schemas";
 import { categories } from "@/app/constants";
 import NotePreview from "./NotePreview";
 import { NoteRequest } from "@/app/types";
-import { cardColors } from "../constants/card";
+import { cardColors } from "@/app/constants/card";
+import { AddButton } from "@/app/components";
 
 interface NoteFormProps {
   open: boolean;
@@ -78,7 +78,7 @@ export default function NoteForm({
     reset();
     setImage(null);
     setSelectedCategory("");
-    setSelectedColor("gold")
+    setSelectedColor("gold");
   };
 
   const submitForm = (values: NoteFormData) => {
@@ -395,7 +395,7 @@ export default function NoteForm({
               </div>
 
               {/* Card Color */}
-                <div className="mb-3 flex items-center justify-between">
+              <div className="mb-3 flex items-center justify-between">
                 <label
                   className="
                     mb-3
@@ -441,21 +441,13 @@ export default function NoteForm({
                 </div>
               </div>
 
-              <Button
+              <AddButton
                 type="submit"
                 disabled={!isValid}
-                className="
-                h-12
-                w-full
-                rounded-full
-                bg-[#1C1C1C]
-                text-white
-                hover:bg-[#333333]
-                disabled:opacity-40
-              "
+                classNameCustom="w-full"
               >
                 ✨ ส่งคำอวยพร
-              </Button>
+              </AddButton>
             </form>
           </div>
 
