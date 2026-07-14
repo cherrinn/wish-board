@@ -12,49 +12,92 @@ export default function StatsHeader({ notes }: StatsHeaderProps) {
   }, {});
 
   return (
-    <section className="mx-auto mb-8 max-w-3xl space-y-4 text-center">
-      <div className="text-xl text-[#B08D57]">✦</div>
-
-      <h1 className="text-2xl font-medium tracking-tight text-[#1C1C1C] md:text-4xl">
-        บันทึกความรู้สึกดี ๆ
-      </h1>
-
-      <p className="text-base text-neutral-500">
-        ทุกข้อความจะถูกเก็บไว้เป็นความทรงจำที่สวยงาม
-      </p>
-
+    <section
+      className="
+        mx-auto
+        mb-10
+        max-w-5xl
+      "
+    >
+      {/* Title row */}
       <div
         className="
           flex
+          items-end
+          justify-between
+          border-b
+          border-[#E8E1D5]
+          pb-5
+        "
+      >
+        <div>
+          <h1
+            className="
+              text-3xl
+              text-[#1C1C1C]
+            "
+          >
+            <span className="text-xl text-[#B08D57]">✦</span> บันทึกความรู้สึกดี
+            ๆ
+          </h1>
+
+          <p
+            className="
+              mt-1
+              pl-6
+              text-sm
+              text-[#8A8178]
+            "
+          >
+            ทุกข้อความจะถูกเก็บไว้เป็นความทรงจำที่สวยงาม
+          </p>
+        </div>
+
+        <div
+          className="
+            text-sm
+            text-neutral-500
+          "
+        >
+          💌 <span className="font-medium text-[#1C1C1C]">{notes.length}</span>{" "}
+          คำอวยพรจากทุกคน
+        </div>
+      </div>
+
+      {/* Categories */}
+      <div
+        className="
+          mt-5
+          flex
+          w-full
           flex-wrap
           items-center
           justify-center
-          gap-x-4
-          gap-y-2
-          text-sm
-          text-neutral-500
+          gap-2
+          text-xs
+          text-[#6B645B]
         "
       >
         {categories.map((category, index) => (
-          <div
-            key={category.value}
-            className="flex items-center gap-1.5 text-[12px]"
-          >
-            <span>{category.icon}</span>
-            <span className="font-semibold text-[#1C1C1C]">
+          <div key={category.value} className="flex items-center gap-1.5">
+            <span>
+              {category.icon} {category.label}
+            </span>
+
+            <span
+              className="
+          font-semibold
+          text-[#1C1C1C]
+        "
+            >
               {categoryCount[category.value] ?? 0}
             </span>
-            <span>{category.label}</span>
+
             {index < categories.length - 1 && (
-              <span className="ml-2 text-neutral-300">|</span>
+              <span className="ml-2 text-[#D8D0C5]">|</span>
             )}
           </div>
         ))}
-      </div>
-      <hr />
-      <div className="pt-2 text-md">
-        💌 <span className="font-semibold text-[#1C1C1C]">{notes.length}</span>{" "}
-        ข้อความจากทุกคน
       </div>
     </section>
   );
