@@ -244,7 +244,7 @@ export default function NoteForm({
                   flex
                   items-center
                   justify-between
-                  rounded-xl
+                  rounded-full
                   border
                   border-[#E8DCC8]
                   bg-white
@@ -278,16 +278,15 @@ export default function NoteForm({
               <label
                 className="
                   flex
-                  h-14
+                  h-12
                   cursor-pointer
                   items-center
                   justify-center
                   gap-3
-                  rounded-xl
+                  rounded-full
                   border
                   border-[#E8DCC8]
                   bg-white
-                  text-base
                   font-medium
                   text-[#6B645B]
                   transition
