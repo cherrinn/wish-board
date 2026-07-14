@@ -4,11 +4,39 @@ interface FloatingAddButtonProps {
   onClick: () => void;
 }
 
-export default function FloatingAddButton({ onClick }: FloatingAddButtonProps) {
+export default function FloatingAddButton({
+  onClick,
+}: FloatingAddButtonProps) {
   return (
     <Button
-      className="fixed bottom-8 left-1/2 z-50 h-14 -translate-x-1/2 rounded-full bg-[#1C1C1C] px-12 text-base text-white shadow-xl transition hover:scale-105 hover:bg-[#333333]"
       onClick={onClick}
+      className="
+        fixed
+        bottom-8
+        right-8
+        z-50
+
+        h-12
+        rounded-full
+
+        bg-[#3F536E]
+        px-6
+
+        text-sm
+        font-medium
+        text-white
+
+        shadow-[0_10px_30px_rgba(63,83,110,0.35)]
+
+        transition-all
+        duration-300
+
+        hover:-translate-y-1
+        hover:bg-[#34455C]
+        hover:shadow-[0_16px_40px_rgba(63,83,110,0.45)]
+
+        active:scale-95
+      "
     >
       ✨ ฝากคำอวยพร
     </Button>
