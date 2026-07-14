@@ -16,6 +16,7 @@ export default function NotesGrid({ notes }: NotesGridProps) {
             imageUrl={note.image_url}
             createdAt={note.created_at}
             cardNo={note.card_number}
+            category={note.category}
           />
         </div>
       ))}

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Badge } from "@/app/components/ui";
+import { categories } from "../constants";
 
 interface NoteCardProps {
   name: string;
@@ -7,6 +8,7 @@ interface NoteCardProps {
   imageUrl?: string;
   message: string;
   cardNo: number;
+  category: string;
 }
 
 export default function NoteCard({
@@ -15,6 +17,7 @@ export default function NoteCard({
   imageUrl,
   message,
   cardNo,
+  category,
 }: NoteCardProps) {
   const date = new Date(createdAt).toLocaleDateString("en-US", {
     day: "numeric",
@@ -22,14 +25,20 @@ export default function NoteCard({
     year: "numeric",
   });
 
+  const currentCategory = categories.find(
+    (item) => item.value === category,
+  );
+
   return (
     <article
       className="
+        relative
         rounded-2xl
         border
         border-[#E8E1D5]
         bg-white
         p-4
+        pt-12
         shadow-sm
         transition
         duration-300
@@ -37,6 +46,26 @@ export default function NoteCard({
         hover:shadow-lg
       "
     >
+      {/* Category */}
+      <div
+        className="
+          absolute
+          right-4
+          top-4
+          inline-flex
+          items-center
+          rounded-full
+          bg-[#FAF7F2]
+          px-3
+          py-1
+          text-xs
+          text-[#8A6E3B]
+        "
+      >
+        {currentCategory?.icon} {currentCategory?.label}
+      </div>
+
+      {/* Name */}
       <h2
         className="
           text-lg
@@ -47,11 +76,18 @@ export default function NoteCard({
         {name}
       </h2>
 
-      <div className="flex justify-between">
-        <p className="text-sm text-neutral-500">{date}</p>
-        <Badge variant="secondary">💌 #{cardNo}</Badge>
+      {/* Date + Card Number */}
+      <div className="mt-2 flex items-center justify-between">
+        <p className="text-sm text-neutral-500">
+          {date}
+        </p>
+
+        <Badge variant="secondary">
+          💌 #{cardNo}
+        </Badge>
       </div>
 
+      {/* Image */}
       {imageUrl && (
         <div className="my-4 overflow-hidden rounded-xl">
           <Image
@@ -64,11 +100,27 @@ export default function NoteCard({
         </div>
       )}
 
+      {/* Divider */}
       <div className="my-4 h-px bg-[#E8E1D5]" />
 
-      <p className="whitespace-pre-wrap text-base leading-9 text-[#333333] flex flex-col">
-        <span className="text-neutral-500 text-sm">💌 ข้อความจากใจ...</span>
-        <span className="pl-4">{message}</span>
+      {/* Message */}
+      <p
+        className="
+          flex
+          flex-col
+          whitespace-pre-wrap
+          text-base
+          leading-9
+          text-[#333333]
+        "
+      >
+        <span className="text-sm text-neutral-500">
+          💌 ข้อความจากใจ...
+        </span>
+
+        <span className="pl-4">
+          {message}
+        </span>
       </p>
     </article>
   );

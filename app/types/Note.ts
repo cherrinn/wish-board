@@ -5,4 +5,5 @@ export interface Note {
   image_url?: string;
   message: string;
   card_number: number;
+  category: string
 }

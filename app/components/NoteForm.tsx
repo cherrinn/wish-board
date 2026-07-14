@@ -18,6 +18,8 @@ import { Textarea } from "@/app/components/ui/textarea";
 
 import { Note } from "@/app/types";
 import { noteSchema, NoteFormData } from "@/app/schemas";
+import { categories } from "@/app/constants";
+
 interface NoteFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -33,12 +35,17 @@ export default function NoteForm({
   onSubmit,
 }: NoteFormProps) {
   const [image, setImage] = useState<File | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const currentCategory = categories.find(
+    (item) => item.value === selectedCategory,
+  );
 
   const {
     register,
     handleSubmit,
     control,
     reset,
+    setValue,
     formState: { errors, isValid },
   } = useForm<NoteFormData>({
     resolver: zodResolver(noteSchema),
@@ -47,20 +54,43 @@ export default function NoteForm({
 
   const message = useWatch({ control, name: "message" }) ?? "";
 
+  const selectCategory = (value: string) => {
+    setSelectedCategory(value);
+
+    setValue("category", value, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+  };
+
   const submitForm = (values: NoteFormData) => {
+    console.log("values.category,", values.category);
     const newNote = {
       name: values.name,
       message: values.message,
       image_url: "",
+      category: values.category,
     };
 
     onSubmit(newNote, image);
     reset();
     setImage(null);
+    setSelectedCategory("");
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog
+      open={open}
+      onOpenChange={(value) => {
+        if (!value) {
+          reset();
+          setImage(null);
+          setSelectedCategory("");
+        }
+
+        onOpenChange(value);
+      }}
+    >
       <DialogContent
         className="
           overflow-hidden
@@ -95,8 +125,8 @@ export default function NoteForm({
               className="
                 h-12
                 rounded-xl
-                !text-lg
-                !leading-8
+                text-lg!
+                leading-8!
                 placeholder:text-base
                 placeholder:text-neutral-400
               "
@@ -104,6 +134,56 @@ export default function NoteForm({
 
             {errors.name && (
               <p className="mt-2 text-sm text-red-500">{errors.name.message}</p>
+            )}
+          </div>
+
+          <div>
+            <label className="mb-3 block text-lg font-medium text-[#333333]">
+              ประเภทคำอวยพร
+            </label>
+
+            <div className="flex flex-wrap gap-2">
+              {categories.map((item) => {
+                const selected = selectedCategory === item.value;
+                return (
+                  <button
+                    key={item.value}
+                    type="button"
+                    onClick={() => selectCategory(item.value)}
+                    className={`
+                      rounded-full
+                      border
+                      px-4
+                      py-2
+                      text-sm
+                      transition-all
+                      duration-200
+                      ${
+                        selected
+                          ? `
+                            border-[#D4AF37]
+                            bg-[#FAF7F2]
+                            text-[#8A6E3B]
+                            shadow-sm
+                          `
+                          : `
+                            border-[#E8DCC8]
+                            text-[#6B645B]
+                            hover:bg-[#FAF7F2]
+                          `
+                      }
+                    `}
+                  >
+                    {item.icon} {item.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            {errors.category && (
+              <p className="mt-2 text-sm text-red-500">
+                {errors.category.message}
+              </p>
             )}
           </div>
 
@@ -116,14 +196,14 @@ export default function NoteForm({
             <Textarea
               {...register("message")}
               maxLength={500}
-              placeholder="เขียนคำอวยพร..."
+              placeholder={currentCategory?.placeholder ?? "เขียนคำอวยพร..."}
               className="
                 min-h-42
                 rounded-xl
                 resize-none
                 whitespace-pre-wrap
-                !text-lg
-                !leading-9
+                text-lg!
+                leading-9!
                 placeholder:text-base
                 placeholder:text-neutral-400
               "
@@ -135,9 +215,17 @@ export default function NoteForm({
               </p>
             )}
 
-            <p className="text-right text-sm text-neutral-400">
-              {message.length}/500
-            </p>
+            <div className="flex justify-between text-sm text-neutral-400 mt-4">
+              <span>
+                {message.length > 100
+                  ? "✨ ข้อความนี้อบอุ่นมาก"
+                  : message.length > 1
+                    ? "💛 กำลังเขียนความทรงจำ..."
+                    : "💌 เริ่มต้นเขียนความรู้สึก"}
+              </span>
+
+              <span>{message.length}/500</span>
+            </div>
           </div>
 
           {/* Image */}
@@ -149,16 +237,16 @@ export default function NoteForm({
             {image ? (
               <div
                 className="
-        flex
-        items-center
-        justify-between
-        rounded-xl
-        border
-        border-[#E8DCC8]
-        bg-white
-        px-4
-        py-3
-      "
+                  flex
+                  items-center
+                  justify-between
+                  rounded-xl
+                  border
+                  border-[#E8DCC8]
+                  bg-white
+                  px-4
+                  py-3
+                "
               >
                 <div className="flex items-center gap-3">
                   <span className="max-w-[220px] truncate text-sm text-[#6B645B]">
@@ -170,14 +258,14 @@ export default function NoteForm({
                   type="button"
                   onClick={() => setImage(null)}
                   className="
-          rounded-full
-          px-3
-          py-1
-          text-sm
-          text-red-400
-          transition
-          hover:bg-red-50
-        "
+                    rounded-full
+                    px-3
+                    py-1
+                    text-sm
+                    text-red-400
+                    transition
+                    hover:bg-red-50
+                  "
                 >
                   ลบ
                 </button>
