@@ -19,6 +19,7 @@ import { Textarea } from "@/app/components/ui/textarea";
 import { Note } from "@/app/types";
 import { noteSchema, NoteFormData } from "@/app/schemas";
 import { categories } from "@/app/constants";
+import NotePreview from "./NotePreview";
 
 interface NoteFormProps {
   open: boolean;
@@ -36,6 +37,7 @@ export default function NoteForm({
 }: NoteFormProps) {
   const [image, setImage] = useState<File | null>(null);
   const [selectedCategory, setSelectedCategory] = useState("");
+
   const currentCategory = categories.find(
     (item) => item.value === selectedCategory,
   );
@@ -52,7 +54,17 @@ export default function NoteForm({
     mode: "onChange",
   });
 
-  const message = useWatch({ control, name: "message" }) ?? "";
+  const name =
+    useWatch({
+      control,
+      name: "name",
+    }) ?? "";
+
+  const message =
+    useWatch({
+      control,
+      name: "message",
+    }) ?? "";
 
   const selectCategory = (value: string) => {
     setSelectedCategory(value);
@@ -63,8 +75,13 @@ export default function NoteForm({
     });
   };
 
+  const clearForm = () => {
+    reset();
+    setImage(null);
+    setSelectedCategory("");
+  };
+
   const submitForm = (values: NoteFormData) => {
-    console.log("values.category,", values.category);
     const newNote = {
       name: values.name,
       message: values.message,
@@ -73,9 +90,8 @@ export default function NoteForm({
     };
 
     onSubmit(newNote, image);
-    reset();
-    setImage(null);
-    setSelectedCategory("");
+
+    clearForm();
   };
 
   return (
@@ -83,9 +99,7 @@ export default function NoteForm({
       open={open}
       onOpenChange={(value) => {
         if (!value) {
-          reset();
-          setImage(null);
-          setSelectedCategory("");
+          clearForm();
         }
 
         onOpenChange(value);
@@ -94,245 +108,326 @@ export default function NoteForm({
       <DialogContent
         className="
           overflow-hidden
-          rounded-3xl
-          bg-white
-          p-6
-          shadow-2xl
-          sm:max-w-lg
+          border-0
+          bg-transparent
+          p-0
+          shadow-none
+          ring-0
+          outline-none
+          sm:max-w-6xl
         "
       >
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-medium text-[#1C1C1C]">
-            ✨ ฝากข้อความจากใจ ✨
-          </DialogTitle>
-
-          <DialogDescription className="text-base! leading-8! text-[#6B645B]!">
-            เขียนคำอวยพรดี ๆ เพื่อเก็บไว้เป็นความทรงจำ
-          </DialogDescription>
-        </DialogHeader>
-
-        <form onSubmit={handleSubmit(submitForm)} className="space-y-4">
-          {/* Name */}
-          <div>
-            <label className="mb-2 block text-lg font-medium text-[#333333]">
-              ชื่อ
-            </label>
-
-            <Input
-              {...register("name")}
-              placeholder="ชื่อของคุณ"
-              maxLength={35}
-              className="
-                h-12
-                rounded-xl
-                text-lg!
-                leading-8!
-                placeholder:text-base
-                placeholder:text-neutral-400
-              "
-            />
-
-            {errors.name && (
-              <p className="mt-2 text-sm text-red-500">{errors.name.message}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="mb-3 block text-lg font-medium text-[#333333]">
-              ประเภทคำอวยพร
-            </label>
-
-            <div className="flex flex-wrap gap-2">
-              {categories.map((item) => {
-                const selected = selectedCategory === item.value;
-                return (
-                  <button
-                    key={item.value}
-                    type="button"
-                    onClick={() => selectCategory(item.value)}
-                    className={`
-                      rounded-full
-                      border
-                      px-4
-                      py-2
-                      text-sm
-                      transition-all
-                      duration-200
-                      ${
-                        selected
-                          ? `
-                            border-[#D4AF37]
-                            bg-[#FAF7F2]
-                            text-[#8A6E3B]
-                            shadow-sm
-                          `
-                          : `
-                            border-[#E8DCC8]
-                            text-[#6B645B]
-                            hover:bg-[#FAF7F2]
-                          `
-                      }
-                    `}
-                  >
-                    {item.icon} {item.label}
-                  </button>
-                );
-              })}
-            </div>
-
-            {errors.category && (
-              <p className="mt-2 text-sm text-red-500">
-                {errors.category.message}
-              </p>
-            )}
-          </div>
-
-          {/* Message */}
-          <div>
-            <label className="mb-2 block text-lg font-medium text-[#333333]">
-              ข้อความ
-            </label>
-
-            <Textarea
-              {...register("message")}
-              maxLength={500}
-              placeholder={currentCategory?.placeholder ?? "เขียนคำอวยพร..."}
-              className="
-                min-h-42
-                w-full
-                max-w-full
-                overflow-y-auto
-                rounded-xl
-                resize-none
-                whitespace-pre-wrap
-                wrap-break-words
-                text-lg!
-                leading-9!
-                placeholder:text-base
-                placeholder:text-neutral-400
-              "
-            />
-
-            {errors.message && (
-              <p className="mt-2 text-sm text-red-500">
-                {errors.message.message}
-              </p>
-            )}
-
-            <div className="flex justify-between text-sm text-neutral-400 mt-4">
-              <span>
-                {message.length > 100
-                  ? "✨ ข้อความนี้อบอุ่นมาก"
-                  : message.length > 1
-                    ? "💛 กำลังเขียนความทรงจำ..."
-                    : "💌 เริ่มต้นเขียนความรู้สึก"}
-              </span>
-
-              <span>{message.length}/500</span>
-            </div>
-          </div>
-
-          {/* Image */}
-          <div>
-            <label className="mb-3 block text-lg font-medium text-[#333333]">
-              รูปภาพ (ถ้ามี)
-            </label>
-
-            {image ? (
-              <div
+        <div
+          className="
+          grid
+          grid-cols-1
+          gap-6
+          lg:grid-cols-[1fr_420px]
+          items-start
+        "
+        >
+          {/* LEFT FORM CARD */}
+          <div
+            className="
+            rounded-3xl
+            bg-white
+            p-6
+            shadow-xl
+          "
+          >
+            <DialogHeader className="mb-6">
+              <DialogTitle
                 className="
-                  flex
-                  items-center
-                  justify-between
-                  rounded-full
-                  border
-                  border-[#E8DCC8]
-                  bg-white
-                  px-4
-                  py-3
-                "
+                text-2xl
+                font-medium
+                text-[#1C1C1C]
+              "
               >
-                <div className="flex items-center gap-3">
-                  <span className="max-w-[220px] truncate text-sm text-[#6B645B]">
-                    {image.name}
-                  </span>
+                ✨ ฝากข้อความจากใจ ✨
+              </DialogTitle>
+
+              <DialogDescription
+                className="
+                mt-2
+                text-base!
+                leading-8!
+                text-[#6B645B]!
+              "
+              >
+                เขียนคำอวยพรดี ๆ เพื่อเก็บไว้เป็นความทรงจำ
+              </DialogDescription>
+            </DialogHeader>
+
+            <form onSubmit={handleSubmit(submitForm)} className="space-y-5">
+              {/* Name */}
+              <div>
+                <label
+                  className="
+                  mb-2
+                  block
+                  text-lg
+                  font-medium
+                  text-[#333333]
+                "
+                >
+                  ชื่อ
+                </label>
+
+                <Input
+                  {...register("name")}
+                  placeholder="ชื่อของคุณ"
+                  maxLength={35}
+                  className="
+                  h-12
+                  rounded-xl
+                  text-lg!
+                "
+                />
+
+                {errors.name && (
+                  <p className="mt-2 text-sm text-red-500">
+                    {errors.name.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Category */}
+              <div>
+                <label
+                  className="
+                  mb-3
+                  block
+                  text-lg
+                  font-medium
+                  text-[#333333]
+                "
+                >
+                  ประเภทคำอวยพร
+                </label>
+
+                <div className="flex flex-wrap gap-2">
+                  {categories.map((item) => {
+                    const selected = selectedCategory === item.value;
+
+                    return (
+                      <button
+                        key={item.value}
+                        type="button"
+                        onClick={() => selectCategory(item.value)}
+                        className={`
+                        rounded-full
+                        border
+                        px-4
+                        py-2
+                        text-sm
+                        transition-all
+                        duration-200
+
+                        ${
+                          selected
+                            ? `
+                          border-[#D4AF37]
+                          bg-[#FAF7F2]
+                          text-[#8A6E3B]
+                          shadow-sm
+                          `
+                            : `
+                          border-[#E8DCC8]
+                          text-[#6B645B]
+                          hover:bg-[#FAF7F2]
+                          `
+                        }
+                      `}
+                      >
+                        {item.icon} {item.label}
+                      </button>
+                    );
+                  })}
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => setImage(null)}
-                  className="
-                    rounded-full
-                    px-3
-                    py-1
-                    text-sm
-                    text-red-400
-                    transition
-                    hover:bg-red-50
-                  "
-                >
-                  ลบ
-                </button>
+                {errors.category && (
+                  <p className="mt-2 text-sm text-red-500">
+                    {errors.category.message}
+                  </p>
+                )}
               </div>
-            ) : (
-              <label
-                className="
-                  flex
-                  h-12
-                  cursor-pointer
-                  items-center
-                  justify-center
-                  gap-3
-                  rounded-full
-                  border
-                  border-[#E8DCC8]
-                  bg-white
+
+              {/* Message */}
+              <div>
+                <label
+                  className="
+                  mb-2
+                  block
+                  text-lg
                   font-medium
-                  text-[#6B645B]
-                  transition
-                  hover:border-[#D4AF37]
-                  hover:bg-[#FAF7F2]
+                  text-[#333333]
                 "
-              >
-                <span>เลือกรูปภาพ</span>
+                >
+                  ข้อความ
+                </label>
 
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-
-                    if (file) {
-                      setImage(file);
-                    }
-                  }}
+                <Textarea
+                  {...register("message")}
+                  maxLength={500}
+                  placeholder={
+                    currentCategory?.placeholder ?? "เขียนคำอวยพร..."
+                  }
+                  className="
+                  min-h-42
+                  rounded-xl
+                  resize-none
+                  whitespace-pre-wrap
+                  break-words
+                  text-lg!
+                  leading-9!
+                "
                 />
-              </label>
-            )}
+
+                {errors.message && (
+                  <p className="mt-2 text-sm text-red-500">
+                    {errors.message.message}
+                  </p>
+                )}
+
+                <div
+                  className="
+                  mt-4
+                  flex
+                  justify-between
+                  text-sm
+                  text-neutral-400
+                "
+                >
+                  <span>
+                    {message.length > 100
+                      ? "✨ ข้อความนี้อบอุ่นมาก"
+                      : message.length > 1
+                        ? "💛 กำลังเขียนความทรงจำ..."
+                        : "💌 เริ่มต้นเขียนความรู้สึก"}
+                  </span>
+
+                  <span>{message.length}/500</span>
+                </div>
+              </div>
+
+              {/* Image */}
+              <div>
+                <label
+                  className="
+                  mb-3
+                  block
+                  text-lg
+                  font-medium
+                  text-[#333333]
+                "
+                >
+                  รูปภาพ (ถ้ามี)
+                </label>
+
+                {image ? (
+                  <div
+                    className="
+                    flex
+                    items-center
+                    justify-between
+                    rounded-full
+                    border
+                    border-[#E8DCC8]
+                    px-4
+                    py-3
+                  "
+                  >
+                    <span className="truncate text-sm">{image.name}</span>
+
+                    <button
+                      type="button"
+                      onClick={() => setImage(null)}
+                      className="text-sm text-red-400"
+                    >
+                      ลบ
+                    </button>
+                  </div>
+                ) : (
+                  <label
+                    className="
+                    flex
+                    h-12
+                    cursor-pointer
+                    items-center
+                    justify-center
+                    rounded-full
+                    border
+                    border-[#E8DCC8]
+                    text-[#6B645B]
+                    hover:bg-[#FAF7F2]
+                  "
+                  >
+                    เลือกรูปภาพ
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+
+                        if (file) {
+                          setImage(file);
+                        }
+                      }}
+                    />
+                  </label>
+                )}
+              </div>
+
+              <Button
+                type="submit"
+                disabled={!isValid}
+                className="
+                h-12
+                w-full
+                rounded-full
+                bg-[#1C1C1C]
+                text-white
+                hover:bg-[#333333]
+                disabled:opacity-40
+              "
+              >
+                ✨ ส่งคำอวยพร
+              </Button>
+            </form>
           </div>
 
-          {/* Submit */}
-          <Button
-            type="submit"
-            disabled={!isValid}
+          {/* RIGHT PREVIEW CARD */}
+
+          <div
             className="
-              mt-3
-              h-14
-              w-full
-              rounded-full
-              bg-[#1C1C1C]
-              text-base
-              font-medium
-              text-white
-              hover:bg-[#333333]
-              disabled:cursor-not-allowed
-              disabled:opacity-40
-            "
+            hidden
+            rounded-3xl
+            bg-[#FAF7F2]
+            p-6
+            shadow-xl
+            lg:block
+          "
           >
-            ✨ ส่งคำอวยพร
-          </Button>
-        </form>
+            <h3
+              className="
+              mb-5
+              text-lg
+              font-medium
+              text-[#333333]
+            "
+            >
+              ✨ ตัวอย่างการ์ด
+            </h3>
+
+            <NotePreview
+              name={name}
+              message={message}
+              category={selectedCategory}
+              image={image}
+            />
+          </div>
+        </div>
       </DialogContent>
     </Dialog>
   );
