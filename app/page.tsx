@@ -233,22 +233,22 @@ export default function Home() {
       ) : (
         <section
           className="
-    mx-auto
-    w-full
-    max-w-[1200px]
-    columns-1
-    sm:columns-2
-    lg:columns-4
-    gap-8
-  "
+            mx-auto
+            w-full
+            max-w-300
+            columns-1
+            sm:columns-2
+            lg:columns-4
+            gap-8
+          "
         >
           {notes.map((note) => (
             <div
               key={note.id}
               className="
-        mb-8
-        break-inside-avoid
-      "
+                mb-8
+                break-inside-avoid
+              "
             >
               <NoteCard
                 name={note.name}
