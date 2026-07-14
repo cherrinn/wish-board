@@ -48,10 +48,10 @@ export default function NotePreview({
     >
       <div
         className="
-        rounded-2xl
-        bg-white
-        p-1.5
-      "
+          rounded-2xl
+          bg-white
+          p-1.5
+        "
       >
         <article
           className="
@@ -64,30 +64,39 @@ export default function NotePreview({
           {/* Category */}
           <div
             className="
-          absolute
-          right-4
-          top-4
-          inline-flex
-          items-center
-          rounded-full
-          bg-[#FAF7F2]
-          px-3
-          py-1
-          text-xs
-          text-[#8A6E3B]
-        "
+              absolute
+              right-4
+              top-2
+              inline-flex
+              items-center
+              gap-1.5
+              rounded-full
+              border
+              px-2
+              py-1
+              text-xs
+              font-medium
+              backdrop-blur-sm
+            "
+            style={{
+              backgroundColor: `${currentColor?.code}18`,
+              borderColor: `${currentColor?.code}50`,
+              color: "#6B645B",
+            }}
           >
-            {currentCategory?.icon ?? "🌸"}{" "}
+            {currentCategory?.icon ?? "💌"}{" "}
+            <span>{currentCategory?.label}</span>
+            <span className="opacity-50">•</span>
             {currentCategory?.label ?? "ประเภทคำอวยพร"}
           </div>
 
           {/* Name */}
           <h2
             className="
-          text-lg
-          font-medium
-          text-[#1C1C1C]
-        "
+              text-lg
+              font-medium
+              text-[#1C1C1C]
+            "
           >
             {name || "ชื่อของคุณ"}
           </h2>
@@ -95,30 +104,30 @@ export default function NotePreview({
           {/* Date */}
           <div
             className="
-          mt-2
-          flex
-          items-center
-          justify-between
-        "
+              mt-2
+              flex
+              items-center
+              justify-between
+            "
           >
             <p
               className="
-            text-sm
-            text-neutral-500
-          "
+                text-sm
+                text-neutral-500
+              "
             >
               {date}
             </p>
 
             <span
               className="
-            rounded-full
-            bg-[#F5F5F5]
-            px-3
-            py-1
-            text-xs
-            text-neutral-500
-          "
+                rounded-full
+                bg-[#F5F5F5]
+                px-3
+                py-1
+                text-xs
+                text-neutral-500
+              "
             >
               💌 Preview
             </span>
@@ -139,10 +148,10 @@ export default function NotePreview({
                 width={400}
                 height={400}
                 className="
-              h-auto
-              w-full
-              object-cover
-            "
+                  h-auto
+                  w-full
+                  object-cover
+                "
               />
             </div>
           )}
@@ -150,28 +159,28 @@ export default function NotePreview({
           {/* Divider */}
           <div
             className="
-          my-4
-          h-px
-          bg-[#E8E1D5]
-        "
+              my-4
+              h-px
+              bg-[#E8E1D5]
+            "
           />
 
           {/* Message */}
           <p
             className="
-          flex
-          flex-col
-          whitespace-pre-wrap
-          text-base
-          leading-9
-          text-[#333333]
-        "
+              flex
+              flex-col
+              whitespace-pre-wrap
+              text-base
+              leading-9
+              text-[#333333]
+            "
           >
             <span
               className="
-            text-sm
-            text-neutral-500
-          "
+                text-sm
+                text-neutral-500
+              "
             >
               💌 ข้อความจากใจ...
             </span>

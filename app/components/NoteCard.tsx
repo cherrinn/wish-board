@@ -64,20 +64,30 @@ export default function NoteCard({
           {/* Category */}
           <div
             className="
-            absolute
-            right-4
-            top-4
-            inline-flex
-            items-center
-            rounded-full
-
-            px-3
-            py-1
-            text-xs
-            text-[#8A6E3B]
-          "
+              absolute
+              right-4
+              top-2
+              inline-flex
+              items-center
+              gap-1.5
+              rounded-full
+              border
+              px-2
+              py-1
+              text-xs
+              font-medium
+              backdrop-blur-sm
+            "
+            style={{
+              backgroundColor: `${currentColor?.code}18`,
+              borderColor: `${currentColor?.code}50`,
+              color: "#6B645B",
+            }}
           >
-            {currentCategory?.icon} {currentCategory?.label} #{cardNo}
+            <span className="text-sm">{currentCategory?.icon}</span>
+            <span>{currentCategory?.label}</span>
+            <span className="opacity-50">•</span>
+            <span className="font-semibold">#{cardNo}</span>
           </div>
 
           {/* Name */}
