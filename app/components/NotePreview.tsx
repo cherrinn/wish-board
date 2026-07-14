@@ -85,9 +85,9 @@ export default function NotePreview({
             }}
           >
             {currentCategory?.icon ?? "💌"}{" "}
-            <span>{currentCategory?.label}</span>
+            <span>{currentCategory?.label ?? "ประเภทคำอวยพร"}</span>
             <span className="opacity-50">•</span>
-            {currentCategory?.label ?? "ประเภทคำอวยพร"}
+            #1
           </div>
 
           {/* Name */}
@@ -112,25 +112,12 @@ export default function NotePreview({
           >
             <p
               className="
-                text-sm
+                text-[12px]
                 text-neutral-500
               "
             >
               {date}
             </p>
-
-            <span
-              className="
-                rounded-full
-                bg-[#F5F5F5]
-                px-3
-                py-1
-                text-xs
-                text-neutral-500
-              "
-            >
-              💌 Preview
-            </span>
           </div>
 
           {/* Image */}
