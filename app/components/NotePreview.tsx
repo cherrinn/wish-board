@@ -34,7 +34,7 @@ export default function NotePreview({
     <div
       className="
         rounded-3xl
-        border
+        border-[1.5px]
         p-1.5
         transition
         duration-300
