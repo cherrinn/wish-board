@@ -86,179 +86,178 @@ export default function Home() {
     <main
       className="
         relative
+        isolate
         min-h-screen
         overflow-hidden
         bg-[#FAF7F2]
         px-6
+        py-16
         md:px-12
         lg:px-24
-        py-16
       "
     >
-      <Sparkles />
+      {/* ================= Background ================= */}
 
-      <div
-        className="
-          absolute
-          -left-32
-          -top-32
-          h-[500px]
-          w-[500px]
-          rounded-full
-          bg-[#F3D7A3]/40
-          blur-3xl
-        "
-      />
+      <div className="absolute inset-0 -z-10 pointer-events-none">
+        <Sparkles />
 
-      <div
-        className="
-          absolute
-          right-[150px]
-          top-1/3
-          h-[450px]
-          w-[450px]
-          rounded-full
-          bg-[#E8C7D1]/30
-          blur-3xl
-        "
-      />
-
-      <section
-        className="
-          relative
-          z-10
-          mx-auto
-          mb-16
-          max-w-3xl
-          text-center
-        "
-      >
-        <div className="mb-6 text-xl text-[#B08D57]">✦</div>
-
-        <h1
+        <div
           className="
-            text-2xl
-            font-medium
-            tracking-tight
-            text-[#1C1C1C]
-            md:text-4xl
+            absolute
+            -left-32
+            -top-32
+            h-125
+            w-125
+            rounded-full
+            bg-[#F3D7A3]/40
+            blur-3xl
           "
-        >
-          บันทึกความรู้สึกดี ๆ
-        </h1>
+        />
 
-        <p className="mt-6 text-base text-neutral-500">
-          ทุกข้อความจะถูกเก็บไว้เป็นความทรงจำที่สวยงาม
-        </p>
-      </section>
+        <div
+          className="
+            absolute
+            right-37.5
+            top-1/3
+            h-112.5
+            w-112.5
+            rounded-full
+            bg-[#E8C7D1]/30
+            blur-3xl
+          "
+        />
+      </div>
 
-      {isLoading ? (
+      {/* ================= Content ================= */}
+
+      <div className="relative z-10">
         <section
           className="
-          flex
-          min-h-[45vh]
-          items-center
-          justify-center
-        "
+        mx-auto
+        mb-12
+        max-w-3xl
+        space-y-4
+        text-center
+      "
         >
-          <p className="text-xl text-neutral-400">กำลังโหลดข้อความอวยพร...</p>
-        </section>
-      ) : notes.length === 0 ? (
-        <section
-          className="
-          flex
-          min-h-[45vh]
-          items-center
-          justify-center
-          text-center
-        "
-        >
-          <Card
+          <div className="text-xl text-[#B08D57]">✦</div>
+
+          <h1 className="text-2xl font-medium tracking-tight text-[#1C1C1C] md:text-4xl">
+            บันทึกความรู้สึกดี ๆ
+          </h1>
+
+          <p className="text-base text-neutral-500">
+            ทุกข้อความจะถูกเก็บไว้เป็นความทรงจำที่สวยงาม
+          </p>
+
+          <div
             className="
-              w-full
-              max-w-lg
-              rounded-[36px]
-              border
-              border-white/60
-              bg-white/30
-              p-8
-              shadow-xl
-              backdrop-blur-2xl
-            "
-          >
-            <h2
-              className="
-                text-2xl
-                font-medium
-                leading-tight
-                text-[#1C1C1C]
-              "
-            >
-              เรื่องราวดี ๆ
-              <br />
-              กำลังจะเริ่มต้น
-            </h2>
-
-            <p
-              className="
+              flex
+              flex-wrap
+              items-center
+              justify-center
+              gap-5
               text-sm
-              leading-9
               text-neutral-500
             "
-            >
-              ฝากคำอวยพรแรกของคุณ เพื่อร่วมสร้างความทรงจำดี ๆ ไว้ที่นี่
-            </p>
-
-            <Button
-              className="
-                h-12
-                rounded-full
-                bg-[#1C1C1C]
-                px-10
-                text-base
-                text-white
-                shadow-lg
-                transition
-                hover:scale-105
-                hover:bg-[#333333]
-              "
-              onClick={() => setIsOpen(true)}
-            >
-              ✨ ฝากคำอวยพร
-            </Button>
-          </Card>
-        </section>
-      ) : (
-        <section
-          className="
-            mx-auto
-            w-full
-            max-w-300
-            columns-1
-            sm:columns-2
-            lg:columns-4
-            gap-8
-          "
-        >
-          {notes.map((note) => (
-            <div
-              key={note.id}
-              className="
-                mb-8
-                break-inside-avoid
-              "
-            >
-              <NoteCard
-                name={note.name}
-                message={note.message}
-                imageUrl={note.image_url}
-                createdAt={note.created_at}
-                cardNo={note.card_number}
-              />
+          >
+            <div className="flex items-center gap-2">
+              <span>💌</span>
+              <span>
+                <strong className="text-[#1C1C1C]">{notes.length}</strong>{" "}
+                คำอวยพร
+              </span>
             </div>
-          ))}
+
+            <span className="text-neutral-300">|</span>
+
+            <div className="flex items-center gap-2">
+              <span>📷</span>
+              <span>
+                <strong className="text-[#1C1C1C]">
+                  {notes.filter((note) => note.image_url).length}
+                </strong>{" "}
+                รูปภาพ
+              </span>
+            </div>
+          </div>
         </section>
-      )}
+
+        {isLoading ? (
+          <section className="flex min-h-[45vh] items-center justify-center">
+            <p className="text-xl text-neutral-400">กำลังโหลดข้อความอวยพร...</p>
+          </section>
+        ) : notes.length === 0 ? (
+          <section className="flex min-h-[45vh] items-center justify-center text-center">
+            <Card
+              className="
+                w-full
+                max-w-lg
+                rounded-[36px]
+                border
+                border-white/60
+                bg-white/60
+                p-8
+                shadow-xl
+                backdrop-blur-2xl
+              "
+            >
+              <h2 className="text-2xl font-medium leading-tight text-[#1C1C1C]">
+                เรื่องราวดี ๆ
+                <br />
+                กำลังจะเริ่มต้น
+              </h2>
+
+              <p className="text-sm leading-9 text-neutral-500">
+                ฝากคำอวยพรแรกของคุณ เพื่อร่วมสร้างความทรงจำดี ๆ ไว้ที่นี่
+              </p>
+
+              <Button
+                className="
+              mt-6
+              h-12
+              rounded-full
+              bg-[#1C1C1C]
+              px-10
+              text-base
+              text-white
+              shadow-lg
+              transition
+              hover:scale-105
+              hover:bg-[#333333]
+            "
+                onClick={() => setIsOpen(true)}
+              >
+                ✨ ฝากคำอวยพร
+              </Button>
+            </Card>
+          </section>
+        ) : (
+          <section
+            className="
+              mx-auto
+              w-full
+              max-w-300
+              columns-1
+              gap-8
+              sm:columns-2
+              lg:columns-4
+            "
+          >
+            {notes.map((note) => (
+              <div key={note.id} className="mb-8 break-inside-avoid">
+                <NoteCard
+                  name={note.name}
+                  message={note.message}
+                  imageUrl={note.image_url}
+                  createdAt={note.created_at}
+                  cardNo={note.card_number}
+                />
+              </div>
+            ))}
+          </section>
+        )}
+      </div>
 
       {notes.length > 0 && (
         <Button
@@ -266,6 +265,7 @@ export default function Home() {
             fixed
             bottom-8
             left-1/2
+            z-50
             h-14
             -translate-x-1/2
             rounded-full
