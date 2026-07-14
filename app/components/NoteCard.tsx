@@ -21,12 +21,11 @@ export default function NoteCard({
   category,
   color,
 }: NoteCardProps) {
-  const date = new Date(createdAt).toLocaleDateString("en-US", {
+  const date = new Date(createdAt).toLocaleDateString("th-TH", {
     day: "numeric",
     month: "long",
     year: "numeric",
   });
-
   const currentCategory = categories.find((item) => item.value === category);
   const currentColor = cardColors.find((item) => item.value === color);
 
