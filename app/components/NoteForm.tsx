@@ -81,7 +81,7 @@ export default function NoteForm({
     setSelectedColor("gold");
   };
 
-  const submitForm = (values: NoteFormData) => {
+  const submitForm = async (values: NoteFormData) => {
     const newNote = {
       name: values.name,
       message: values.message,
@@ -90,7 +90,7 @@ export default function NoteForm({
       card_color: selectedColor,
     };
 
-    onSubmit(newNote, image);
+    await onSubmit(newNote, image);
 
     clearForm();
   };

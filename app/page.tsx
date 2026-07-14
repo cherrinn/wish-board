@@ -24,6 +24,7 @@ export default function Home() {
       toast.success("ส่งคำอวยพรเรียบร้อยแล้ว ✨");
     } catch (err) {
       toast.error("ไม่สามารถส่งคำอวยพรได้ กรุณาลองใหม่อีกครั้ง");
+      throw err; 
     }
   };
 
