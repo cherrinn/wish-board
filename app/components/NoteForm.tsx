@@ -16,17 +16,8 @@ import { Button } from "@/app/components/ui/button";
 import { Input } from "@/app/components/ui/input";
 import { Textarea } from "@/app/components/ui/textarea";
 
-import { Note } from "../types/Note";
-import { z } from "zod";
-
-const noteSchema = z.object({
-  name: z.string().min(1, "กรุณาใส่ชื่อ").max(35, "ชื่อยาวเกินไป"),
-
-  message: z.string().min(1, "กรุณาเขียนคำอวยพร").max(500, "ข้อความยาวเกินไป"),
-});
-
-type NoteFormData = z.infer<typeof noteSchema>;
-
+import { Note } from "@/app/types";
+import { noteSchema, NoteFormData } from "@/app/schemas";
 interface NoteFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -86,7 +77,7 @@ export default function NoteForm({
             ✨ ฝากข้อความจากใจ ✨
           </DialogTitle>
 
-          <DialogDescription className="!text-base !leading-8 !text-[#6B645B]">
+          <DialogDescription className="text-base! leading-8! text-[#6B645B]!">
             เขียนคำอวยพรดี ๆ เพื่อเก็บไว้เป็นความทรงจำ
           </DialogDescription>
         </DialogHeader>

@@ -1,15 +1,9 @@
 import { z } from "zod";
 
 export const noteSchema = z.object({
-  name: z
-    .string()
-    .min(1, "กรุณาใส่ชื่อ")
-    .max(35, "ชื่อยาวเกินไป"),
+  name: z.string().min(1, "กรุณาใส่ชื่อ"),
 
-  message: z
-    .string()
-    .min(1, "กรุณาเขียนคำอวยพร")
-    .max(500, "ข้อความยาวเกินไป"),
+  message: z.string().min(1, "กรุณาเขียนคำอวยพร"),
 });
 
 export type NoteFormData = z.infer<typeof noteSchema>;

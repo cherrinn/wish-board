@@ -1,287 +1,58 @@
 "use client";
 
-import { Button } from "@/app/components/ui/button";
-import { Card } from "@/app/components/ui/card";
-import NoteCard from "@/app/components/NoteCard";
-import { useEffect, useState } from "react";
-import NoteForm from "@/app/components/NoteForm";
-import { Note } from "./types/Note";
-import { supabase } from "./lib/supabase";
-import dynamic from "next/dynamic";
-
-const Sparkles = dynamic(() => import("@/app/components/Sparkles"), {
-  ssr: false,
-});
+import { useState } from "react";
+import { Note } from "@/app/types";
+import { useNotes } from "@/app/hooks";
+import {
+  FloatingAddButton,
+  BackgroundDecor,
+  StatsHeader,
+  EmptyState,
+  NotesGrid,
+  NoteForm,
+} from "@/app/components";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
-  const [notes, setNotes] = useState<Note[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { notes, isLoading, error, addNote } = useNotes();
 
-  const handleAddNote = async (newNote: Note, image: File | null) => {
-    let imageUrl = "";
-
-    if (image) {
-      const fileName = `${Date.now()}-${image.name}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from("images")
-        .upload(fileName, image);
-
-      if (uploadError) {
-        console.error(uploadError);
-        return;
-      }
-
-      const { data } = supabase.storage.from("images").getPublicUrl(fileName);
-
-      imageUrl = data.publicUrl;
+  const handleAddNote = async (
+    newNote: Pick<Note, "name" | "message">,
+    image: File | null,
+  ) => {
+    try {
+      await addNote(newNote, image);
+      setIsOpen(false);
+    } catch (err) {
+      // TODO: surface this to the user via toast/inline error instead of console
+      console.error(err);
     }
-
-    const { data, error } = await supabase
-      .from("notes")
-      .insert({
-        name: newNote.name,
-        message: newNote.message,
-        image_url: imageUrl,
-        created_at: new Date().toISOString(),
-      })
-      .select()
-      .single();
-
-    if (error) {
-      console.error(error);
-      return;
-    }
-
-    setNotes((prev) => [data, ...prev]);
-    setIsOpen(false);
   };
 
-  useEffect(() => {
-    const loadNotes = async () => {
-      setIsLoading(true);
-
-      const { data, error } = await supabase
-        .from("notes")
-        .select("*")
-        .order("created_at", {
-          ascending: false,
-        });
-
-      if (error) {
-        console.error(error);
-        setIsLoading(false);
-        return;
-      }
-
-      setNotes(data ?? []);
-      setIsLoading(false);
-    };
-
-    loadNotes();
-  }, []);
-
   return (
-    <main
-      className="
-        relative
-        isolate
-        min-h-screen
-        overflow-hidden
-        bg-[#FAF7F2]
-        px-6
-        py-16
-        md:px-12
-        lg:px-24
-      "
-    >
-      {/* ================= Background ================= */}
-
-      <div className="absolute inset-0 -z-10 pointer-events-none">
-        <Sparkles />
-
-        <div
-          className="
-            absolute
-            -left-32
-            -top-32
-            h-125
-            w-125
-            rounded-full
-            bg-[#F3D7A3]/40
-            blur-3xl
-          "
-        />
-
-        <div
-          className="
-            absolute
-            right-37.5
-            top-1/3
-            h-112.5
-            w-112.5
-            rounded-full
-            bg-[#E8C7D1]/30
-            blur-3xl
-          "
-        />
-      </div>
-
-      {/* ================= Content ================= */}
+    <main className="relative isolate min-h-screen overflow-hidden bg-[#FAF7F2] px-6 py-16 md:px-12 lg:px-24">
+      <BackgroundDecor />
 
       <div className="relative z-10">
-        <section
-          className="
-        mx-auto
-        mb-12
-        max-w-3xl
-        space-y-4
-        text-center
-      "
-        >
-          <div className="text-xl text-[#B08D57]">✦</div>
-
-          <h1 className="text-2xl font-medium tracking-tight text-[#1C1C1C] md:text-4xl">
-            บันทึกความรู้สึกดี ๆ
-          </h1>
-
-          <p className="text-base text-neutral-500">
-            ทุกข้อความจะถูกเก็บไว้เป็นความทรงจำที่สวยงาม
-          </p>
-
-          <div
-            className="
-              flex
-              flex-wrap
-              items-center
-              justify-center
-              gap-5
-              text-sm
-              text-neutral-500
-            "
-          >
-            <div className="flex items-center gap-2">
-              <span>💌</span>
-              <span>
-                <strong className="text-[#1C1C1C]">{notes.length}</strong>{" "}
-                คำอวยพร
-              </span>
-            </div>
-
-            <span className="text-neutral-300">|</span>
-
-            <div className="flex items-center gap-2">
-              <span>📷</span>
-              <span>
-                <strong className="text-[#1C1C1C]">
-                  {notes.filter((note) => note.image_url).length}
-                </strong>{" "}
-                รูปภาพ
-              </span>
-            </div>
-          </div>
-        </section>
+        <StatsHeader notes={notes} />
 
         {isLoading ? (
           <section className="flex min-h-[45vh] items-center justify-center">
             <p className="text-xl text-neutral-400">กำลังโหลดข้อความอวยพร...</p>
           </section>
+        ) : error ? (
+          <section className="flex min-h-[45vh] items-center justify-center">
+            <p className="text-xl text-red-400">{error}</p>
+          </section>
         ) : notes.length === 0 ? (
-          <section className="flex min-h-[45vh] items-center justify-center text-center">
-            <Card
-              className="
-                w-full
-                max-w-lg
-                rounded-[36px]
-                border
-                border-white/60
-                bg-white/60
-                p-8
-                shadow-xl
-                backdrop-blur-2xl
-              "
-            >
-              <h2 className="text-2xl font-medium leading-tight text-[#1C1C1C]">
-                เรื่องราวดี ๆ
-                <br />
-                กำลังจะเริ่มต้น
-              </h2>
-
-              <p className="text-sm leading-9 text-neutral-500">
-                ฝากคำอวยพรแรกของคุณ เพื่อร่วมสร้างความทรงจำดี ๆ ไว้ที่นี่
-              </p>
-
-              <Button
-                className="
-              mt-6
-              h-12
-              rounded-full
-              bg-[#1C1C1C]
-              px-10
-              text-base
-              text-white
-              shadow-lg
-              transition
-              hover:scale-105
-              hover:bg-[#333333]
-            "
-                onClick={() => setIsOpen(true)}
-              >
-                ✨ ฝากคำอวยพร
-              </Button>
-            </Card>
-          </section>
+          <EmptyState onAddClick={() => setIsOpen(true)} />
         ) : (
-          <section
-            className="
-              mx-auto
-              w-full
-              max-w-300
-              columns-1
-              gap-8
-              sm:columns-2
-              lg:columns-4
-            "
-          >
-            {notes.map((note) => (
-              <div key={note.id} className="mb-8 break-inside-avoid">
-                <NoteCard
-                  name={note.name}
-                  message={note.message}
-                  imageUrl={note.image_url}
-                  createdAt={note.created_at}
-                  cardNo={note.card_number}
-                />
-              </div>
-            ))}
-          </section>
+          <NotesGrid notes={notes} />
         )}
       </div>
 
       {notes.length > 0 && (
-        <Button
-          className="
-            fixed
-            bottom-8
-            left-1/2
-            z-50
-            h-14
-            -translate-x-1/2
-            rounded-full
-            bg-[#1C1C1C]
-            px-12
-            text-base
-            text-white
-            shadow-xl
-            transition
-            hover:scale-105
-            hover:bg-[#333333]
-          "
-          onClick={() => setIsOpen(true)}
-        >
-          ✨ ฝากคำอวยพร
-        </Button>
+        <FloatingAddButton onClick={() => setIsOpen(true)} />
       )}
 
       <NoteForm

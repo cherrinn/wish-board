@@ -1,12 +1,12 @@
 import Image from "next/image";
-import { Badge } from "./ui/badge";
+import { Badge } from "@/app/components/ui";
 
 interface NoteCardProps {
   name: string;
   createdAt: string;
   imageUrl?: string;
   message: string;
-  cardNo: number
+  cardNo: number;
 }
 
 export default function NoteCard({
